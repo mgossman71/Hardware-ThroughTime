@@ -1,0 +1,184 @@
+/* ============================================================
+   TYPICAL PC FEATURE — year rail + configuration card
+   ============================================================ */
+
+/* --- Year rail -------------------------------------------------- */
+
+.tpc-rail {
+  margin-bottom: var(--space-6);
+}
+
+.tpc-rail__era {
+  margin-bottom: var(--space-4);
+}
+
+.tpc-rail__label {
+  display: block;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  margin-bottom: var(--space-2);
+}
+
+.tpc-rail__years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tpc-year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-3);
+  min-height: 34px;
+  background: var(--bg-1);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.tpc-year:hover {
+  border-color: var(--accent);
+  color: var(--text-0);
+}
+
+.tpc-year:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.tpc-year--active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-1));
+  color: var(--text-0);
+  font-weight: 600;
+}
+
+/* --- Configuration card ----------------------------------------- */
+
+.tpc-card {
+  background: var(--bg-1);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.tpc-card__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line-0);
+}
+
+.tpc-card__year {
+  font-size: var(--text-2xl);
+  color: var(--accent);
+}
+
+.tpc-card__era {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.tpc-card__timeline {
+  margin-left: auto;
+  font-size: var(--text-xs);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.tpc-card__timeline:hover {
+  text-decoration: underline;
+}
+
+.tpc-card__specs {
+  margin: 0 0 var(--space-5);
+  display: grid;
+  gap: 0;
+}
+
+.tpc-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 2px var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line-0);
+}
+
+.tpc-row:last-child {
+  border-bottom: none;
+}
+
+.tpc-row dt {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+}
+
+.tpc-row dd {
+  margin: 0;
+  color: var(--text-0);
+}
+
+.tpc-row__note {
+  color: var(--text-2);
+  font-size: var(--text-xs);
+}
+
+.tpc-card__price {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-2);
+  border-radius: var(--radius-md);
+}
+
+.tpc-card__price strong {
+  color: var(--accent);
+}
+
+.tpc-note {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}
+
+.tpc-based {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.tpc-caveats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tpc-caveats li {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+@media (max-width: 640px) {
+  .tpc-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .tpc-card__timeline {
+    margin-left: 0;
+  }
+}

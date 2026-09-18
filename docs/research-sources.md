@@ -1397,6 +1397,54 @@ least one entry here via its `sourceIds`.
   - Standard projected to be finalized May 2028; products ~2028–2029
   - Multi-AP coordination, seamless roaming, distributed-tone RUs, AI offload
 
+### wiki-ms-dos — MS-DOS
+- **Publisher:** Wikipedia (citing Microsoft / IBM PC DOS documentation)
+- **URL:** https://en.wikipedia.org/wiki/MS-DOS
+- **Facts used:**
+  - First released 1981 as PC DOS 1.0 / MS-DOS 1.0
+  - PC-DOS 2.x (1983), 3.x (1985), 4.0 (1989)
+  - MS-DOS 5.0 (1991), 6.0 (1993), 6.22 (1994)
+  - Windows 95 shipped as MS-DOS 7.0 (1995)
+  - 16-bit DOS with 640 KB conventional memory base
+
+### wiki-modem — Modem
+- **Publisher:** Wikipedia (citing ITU V.32bis / V.34 / V.90 / V.92 specifications)
+- **URL:** https://en.wikipedia.org/wiki/Modem
+- **Facts used:**
+  - V.32bis 14.4 Kbps (1994)
+  - V.34 28.8 Kbps (1996)
+  - V.90 56 Kbps (1998), V.92 (1999)
+  - 2400–9600 baud dial-up dominant 1985–1993
+
+### wiki-radeon-x800 — Radeon X800
+- **Publisher:** Wikipedia (citing ATI / Radeon X800 launch materials)
+- **URL:** https://en.wikipedia.org/wiki/Radeon_X800
+- **Facts used:**
+  - Launched May 2004
+  - 128–256 MB GDDR3 VRAM
+  - R520 core, 32–12 pixel pipelines
+  - High-end mainstream GPU 2004–2006
+
+### wiki-windows-7 — Windows 7
+- **Publisher:** Wikipedia (citing Microsoft / release notes)
+- **URL:** https://en.wikipedia.org/wiki/Windows_7
+- **Facts used:**
+  - Released July 22, 2009
+  - Dominated the installed base 2010–2015 before Windows 10
+  - Aero Glass, taskbar, library; 32-bit / 64-bit editions
+
+### bls-cpi-u — Consumer Price Index (CPI-U)
+- **Publisher:** U.S. Bureau of Labor Statistics (CPI-U annual averages)
+- **URL:** https://www.bls.gov/cpi/tables/supplemental-files.htm
+- **Facts used:**
+  - CPI-U (1982–84 = 100) annual averages used for price inflation
+  - 1977 = 55.3, 1979 = 60.6, 1981 = 99.6, 1983 = 99.6, 1985 = 107.6
+  - 1987 = 113.6, 1989 = 124.0, 1991 = 136.2, 1993 = 146.7, 1995 = 152.4
+  - 1997 = 160.5, 1999 = 166.6, 2001 = 177.1, 2003 = 184.0, 2005 = 195.3
+  - 2007 = 207.3, 2009 = 214.3, 2011 = 224.9, 2013 = 232.9, 2015 = 237.0
+  - 2017 = 245.1, 2019 = 255.3, 2023 = 304.7, 2024 = 313.7
+  - priceInflatedUsd2024 = priceUsd × (313.7 / CPI-year), rounded to nearest $50
+
 ## Sources still needed (research backlog)
 
 - [x] Pentium III / Pentium 4 (Intel) — `wiki-pentium-3`, `wiki-pentium-4`
@@ -1407,7 +1455,7 @@ least one entry here via its `sourceIds`.
 - [ ] Token Ring (IEEE 802.5)
 - [x] Wi-Fi 802.11 b/g (IEEE / Wi-Fi Alliance) — `wiki-802-11b`, `wiki-802-11g` (802.11a/n still missing)
 - [ ] Windows NT 4.0 / OS/2 2.x (Microsoft, IBM) — Win98/2000/XP done: `wiki-windows-98`, `wiki-windows-2000`, `wiki-windows-xp`
-- [ ] "Typical PC" configurations per year (PC Magazine, AnandTech,
-      contemporaneous reviews)
-- [ ] Inflation conversion basis (BLS CPI calculator)
+- [x] "Typical PC" configurations per year — `src/data/typical-pc.ts` (24 milestone
+      years, 1977–2026; per-component claims cite the machine/part sources above)
+- [x] Inflation conversion basis (BLS CPI calculator) — `bls-cpi-u`
 - [ ] Creative Sound Blaster line beyond AWE32 — Audigy done: `wiki-audigy`
