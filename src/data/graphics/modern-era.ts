@@ -118,4 +118,26 @@ export const GRAPHICS_MODERN: HistoricalEvent[] = [
     sourceIds: ['wiki-blackwell'],
     relatedEventIds: ['nvidia-rtx-40-ada', 'hbm3e-h200', 'nvidia-rtx-30-ampere'],
   },
+  {
+    id: 'amd-rdna-4-rx9070',
+    year: 2025,
+    track: 'graphics',
+    title: 'AMD Radeon RX 9070 (RDNA 4)',
+    summary:
+      "AMD's fourth-generation RDNA architecture — the Radeon RX 9000 series that succeeds RDNA 3 and answers the RTX 50.",
+    detailedDescription:
+      "RDNA 4 (the Radeon RX 9000 series, first with the RX 9070 and RX 9070 XT unveiled in early 2025) is AMD's successor to RDNA 3. It moves to TSMC's 4 nm / 3 nm nodes (N4P / N3E), targets 1440p, and pairs with GDDR6 or GDDR7. It is AMD's direct answer to NVIDIA's Blackwell-class GeForce RTX 50 series in 2025, and it carries the chiplet-plus-node playbook that won for RDNA 3 into the next generation.",
+    manufacturer: 'AMD',
+    specs: {
+      flagship: 'RX 9070 / RX 9070 XT',
+      process: 'TSMC N4P / N3E',
+      memory: 'GDDR6 / GDDR7',
+      target: '1440p (QHD)',
+      successorTo: 'RDNA 3 (2023)',
+    },
+    significance:
+      "RDNA 4 is the Modern-era graphics step for AMD: it extends the RDNA lineage that has defined Radeon for a decade into 2025, and it is the competitor frame for the era's GPU race against NVIDIA's RTX 50 (Blackwell).",
+    sourceIds: ['wiki-rdna-4'],
+    relatedEventIds: ['nvidia-rtx-50-blackwell', 'amd-rdna-3'],
+  },
 ];

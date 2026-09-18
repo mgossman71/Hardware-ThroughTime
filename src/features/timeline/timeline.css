@@ -505,3 +505,155 @@
     padding: var(--space-4);
   }
 }
+
+/* ============================================================
+   Projections (2027+) — a "future" band on the canvas.
+   Distinct from historical eras: tinted zone, dashed nodes, a
+   "2026 · present" divider, and a clickable band label.
+   ============================================================ */
+
+.timeline-page {
+  --proj-accent: #8ab4ff; /* soft indigo — reads as "future / estimate" */
+}
+
+/* Tinted "future" region behind the projection lanes. */
+.tl-proj-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--proj-accent) 7%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Clickable band label in the era-label strip (top 90px). */
+.tl-proj-label {
+  position: absolute;
+  top: 0;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding-top: var(--space-3);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  z-index: 3;
+}
+.tl-proj-label__title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--proj-accent);
+}
+.tl-proj-label__years {
+  font-size: 10px;
+  color: color-mix(in srgb, var(--proj-accent) 65%, var(--text-3));
+}
+.tl-proj-label:hover .tl-proj-label__title {
+  color: var(--text-0);
+}
+.tl-proj-label:focus-visible {
+  outline: 2px solid var(--proj-accent);
+  outline-offset: -2px;
+  border-radius: var(--radius-sm);
+}
+
+/* The "2026 · present" boundary divider. */
+.tl-proj-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed color-mix(in srgb, var(--proj-accent) 55%, transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+.tl-proj-divider__label {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-0);
+  background: color-mix(in srgb, var(--proj-accent) 22%, var(--bg-1));
+  border: 1px solid color-mix(in srgb, var(--proj-accent) 45%, transparent);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+}
+
+/* Projection nodes — dashed border + hollow dot = "estimate, not record". */
+.tl-event--projection {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--track-accent, var(--accent)) 45%, var(--proj-accent));
+  background: color-mix(in srgb, var(--proj-accent) 10%, var(--bg-3));
+}
+.tl-event--projection .tl-event__dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--track-accent, var(--accent));
+}
+.tl-event--projection .tl-event__label::before {
+  content: '~';
+  color: var(--proj-accent);
+  font-weight: 700;
+  margin-right: 3px;
+}
+/* A selected projection keeps the clear "pinned" highlight. */
+.tl-event--projection.tl-event--selected {
+  border-color: color-mix(in srgb, var(--track-accent, var(--accent)) 60%, transparent);
+  background: color-mix(in srgb, var(--track-accent, var(--accent)) 18%, var(--bg-2));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--track-accent, var(--accent)) 22%, transparent),
+    0 6px 16px rgba(0, 0, 0, 0.5);
+}
+.tl-event--projection.tl-event--selected .tl-event__dot {
+  background: var(--track-accent, var(--accent));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--track-accent, var(--accent)) 70%, transparent);
+}
+
+/* Projections "era" chip + show/hide toggle (in the controls). */
+.era-chip--projection {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--proj-accent) 45%, var(--line-1));
+}
+.era-chip--projection .era-chip__years {
+  color: var(--proj-accent);
+  opacity: 1;
+}
+.era-chip--projection.era-chip--active {
+  background: color-mix(in srgb, var(--proj-accent) 14%, var(--bg-2));
+}
+
+.timeline-page__projection-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.timeline-page__projection-toggle-btn {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px dashed color-mix(in srgb, var(--proj-accent) 45%, var(--line-1));
+  border-radius: var(--radius-pill);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-size: var(--text-sm);
+}
+.timeline-page__projection-toggle-btn:hover {
+  border-color: var(--proj-accent);
+  color: var(--text-0);
+}
+.timeline-page__projection-toggle-btn[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--proj-accent) 12%, var(--bg-2));
+  color: var(--text-0);
+}
+.timeline-page__projection-hint {
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}

@@ -1117,6 +1117,16 @@ least one entry here via its `sourceIds`.
   - 24 GB GDDR6, integrated iGPU on IOD
   - Infinity Fabric
 
+### wiki-rdna-4 — RDNA 4
+- **Publisher:** Wikipedia (citing AMD)
+- **URL:** https://en.wikipedia.org/wiki/RDNA_4
+- **Facts used:**
+  - Radeon RX 9000 series (RX 9070, RX 9070 XT), 2025
+  - Successor to RDNA 3
+  - TSMC N4P / N3E (4 nm / 3 nm) node
+  - GDDR6 / GDDR7 memory
+  - Targeted at 1440p / high-refresh QHD
+
 ### wiki-blackwell — Blackwell (microarchitecture)
 - **Publisher:** Wikipedia (citing NVIDIA)
 - **URL:** https://en.wikipedia.org/wiki/Blackwell_(microarchitecture)

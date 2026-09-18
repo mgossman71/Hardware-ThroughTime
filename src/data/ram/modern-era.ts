@@ -94,4 +94,25 @@ export const RAM_MODERN: HistoricalEvent[] = [
     sourceIds: ['wiki-nvidia-h200'],
     relatedEventIds: ['hbm3', 'hbm2e-a100', 'nvidia-rtx-50-blackwell'],
   },
+  {
+    id: 'hbm4',
+    year: 2026,
+    track: 'ram',
+    title: 'HBM4',
+    summary:
+      'A wider 2048-bit per-stack interface and a higher data rate — the next rung in the AI memory bandwidth race.',
+    detailedDescription:
+      'HBM4 (JEDEC, production ramp 2026) widens the per-stack interface to 2048 bits and raises the per-stack data rate over HBM3E, targeting the next generation of AI accelerators (NVIDIA Rubin-class and the AMD MI-series). It continues the "feed the GPU faster" arms race that HBM2E → HBM3 → HBM3E established, and by 2026 it is moving from sampling into volume production at SK hynix, Samsung, and Micron.',
+    manufacturer: 'Industry (JEDEC; SK hynix / Samsung / Micron)',
+    specs: {
+      standard: 'JEDEC (HBM4)',
+      interface: '2048-bit per stack',
+      generation: 'successor to HBM3E',
+      era: '2026 AI accelerator memory',
+    },
+    significance:
+      "HBM4 is where the era's memory story points next: doubling the HBM interface width is the only way to keep feeding transformer workloads, and it becomes the memory baseline that Rubin-class and later accelerators will demand.",
+    sourceIds: ['wiki-high-bandwidth-memory'],
+    relatedEventIds: ['hbm3e-h200', 'hbm3'],
+  },
 ];

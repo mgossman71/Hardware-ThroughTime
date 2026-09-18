@@ -1,7 +1,7 @@
 # Project Checkpoint
 
 ## Current Goal
-Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. **v0.6: timeline event nodes fully redesigned** (chip nodes on track spines, contrast-safe labels, dynamic canvas height, full state ladder). **v0.7: Modern era (2020–2026) complete — all seven eras now populated.** 39 new events across all 11 tracks + 34 new sources; the final "empty era" test assertion flipped from `>= 1` to `0`.
+Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. **v0.6: timeline event nodes fully redesigned** (chip nodes on track spines, contrast-safe labels, dynamic canvas height, full state ladder). **v0.7: Modern era (2020–2026) complete — all seven eras now populated.** 39 new events across all 11 tracks + 34 new sources; the final "empty era" test assertion flipped from `>= 1` to `0`. **v0.8: Projections (2027+) band** — a distinct, toggleable "future" band on the timeline (tinted zone, dashed nodes, a "2026 · present" divider, and a `ProjectionDetail` panel), plus 2025–2026 historical backfill (Intel Panther Lake, AMD EPYC "Venice", HBM4, AMD RX 9070 / RDNA 4). 8 cited, confidence-rated projections in `src/data/projections.ts`, kept deliberately OUT of `ALL_EVENTS` so the no-invented-facts policy and the historical data-integrity tests stay intact.
 
 ## Current State
 - ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 17/17 pass.
@@ -9,6 +9,7 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
 - ✅ Data layer: `HistoricalEvent` type, `tracks.ts`, `sources.ts` (149 sources), `registry.ts` (160 events: 1970s–80s seed + full Foundations era (1940–1969) + full Multimedia era (1985–1997) + full Performance Race era (1998–2009) + full Multi-Core era (2010–2019) + full Modern era (2020–2026) — **all seven eras complete**).
 - ✅ Pages: `/`, `/typical-pc`, `/build-a-pc`, `/compare`, `/gallery` (placeholders), `/sources` (functional).
 - ✅ Data integrity tests: unique event/source ids, all `sourceIds` and `relatedEventIds` resolve, era cohort sizes for the Foundations, Multimedia, Performance Race, Multi-Core, and Modern eras (Modern spans all 11 tracks; the "no empty era" assertion now expects 0 empty bands).
+- ✅ Projections (2027+): `src/data/projections.ts` (8 cited, confidence-rated), `ProjectionDetail.tsx` panel, canvas "future" band (`.tl-proj-zone` / `.tl-proj-divider` / `.tl-proj-label` + `.tl-event--projection` nodes), a "Projections" era chip + show/hide toggle in `TimelinePage`, and a "Projections (2027+)" section in the mobile `EventList`. Kept OUT of `ALL_EVENTS`.
 - ✅ Cross-page state: `src/app/focusYear.ts` (useSyncExternalStore) — no circular imports.
 - ✅ Docs: `README.md`, `docs/research-sources.md`, `docs/decisions.md`, `CHECKPOINT.md`.
 - ✅ Deployment: `Dockerfile` (node:22-alpine → nginx:1.27-alpine), `docker-compose.yml` (prod :8081, dev :5174), `nginx.conf`.
@@ -140,18 +141,20 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 1. ~~Populate Performance Race era (1998–2009)~~ — **done (v0.3).**
 2. ~~Populate Multi-Core era (2010–2019)~~ — **done (v0.4).**
 3. ~~Populate Foundations era (1940–1969)~~ — **done (v0.5).** ~~Populate Modern era (2020–2026)~~ — **done (v0.7); all seven eras are now populated.**
-4. Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote.
-5. Begin Build-a-PC: era component pool data model (`EraComponent` type already exists), then interactive build UI.
-6. Begin era-comparison: `ComparePage` with honest-ratio callouts.
-7. Add gallery with licensed/attributed photography (label illustration vs. photo per spec).
-8. Add CI (lint + typecheck + test + build).
-9. Add visual regression or at least a smoke screenshot for the timeline.
+4. ~~Projections (2027+) band + 2025–2026 backfill~~ — **done (v0.8).** Distinct "future" band (`.tl-proj-zone`/`.tl-proj-divider`/`.tl-proj-label` + dashed `.tl-event--projection` nodes), `ProjectionDetail` panel, "Projections" era chip + show/hide toggle, mobile `EventList` section. Sourced backfill: Intel Panther Lake (2026), AMD EPYC "Venice" (2026), HBM4 (2026), AMD RX 9070 / RDNA 4 (2025). 8 cited, confidence-rated projections in `src/data/projections.ts`, kept OUT of `ALL_EVENTS`.
+5. Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote.
+6. Begin Build-a-PC: era component pool data model (`EraComponent` type already exists), then interactive build UI.
+7. Begin era-comparison: `ComparePage` with honest-ratio callouts.
+8. Add gallery with licensed/attributed photography (label illustration vs. photo per spec).
+9. Add CI (lint + typecheck + test + build).
+10. Add visual regression or at least a smoke screenshot for the timeline.
 
 ## Validation
 - `npx tsc --noEmit` → clean
 - `npm run lint` → clean
-- `npm run build` → success (106 modules; sources chunk carries 149 sources)
-- `npx vitest run` → 17 passed (2 files), incl. data-integrity suite + five era cohort tests (Foundations, Multimedia, Performance Race, Multi-Core, Modern)
+- `npm run build` → success (108 modules; sources chunk carries 154 sources)
+- `npx vitest run` → **20 passed** (2 files): data-integrity suite + five era cohort tests (Foundations, Multimedia, Performance Race, Multi-Core, Modern) + **v0.8** (projections cohort 2027+ sourced & confidence-valid, 2025–2026 backfill source resolution, projections band render)
+- **v0.8 (projections band):** tsc / lint / vitest (20/20) / vite build all clean. Totals: **164 events, 154 sources, 8 projections**.
 - **Node redesign (v0.6):** `tsc -b` / `eslint` / `vitest` (16/16) / `vite build` all clean; Docker rebuilt; container-served TimelinePage bundle verified to contain the new node/gridline/`--track-accent` styles.
 - **Docker:** the user views the app at `http://10.0.0.86:8081/#/timeline`.
   After any content/UI change, run `docker compose up --build` so the new image is served.
@@ -169,6 +172,18 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
+2026-09-18 — v0.8: Projections (2027+) band on the timeline + 2025–2026 backfill. Added a
+    distinct, toggleable "future" band: tinted zone (`.tl-proj-zone`), dashed nodes
+    (`.tl-event--projection` + hollow dot), a "2026 · present" divider, a clickable band label,
+    a `ProjectionDetail` panel (confidence / basis / sources, distinct from historical events),
+    a "Projections" era chip + show/hide toggle, and a mobile `EventList` section. Projections
+    are estimates (not history): 8 cited, confidence-rated entries in `src/data/projections.ts`,
+    kept deliberately OUT of `ALL_EVENTS` so the no-invented-facts policy + historical data-
+    integrity tests stay intact. 2025–2026 backfill (sourced): Intel Panther Lake (2026),
+    AMD EPYC "Venice" (2026), HBM4 (2026), AMD RX 9070 / RDNA 4 (2025). 5 new sources
+    (wiki-zen-6, wiki-panther-lake, wiki-ddr6, wiki-wifi-8, wiki-rdna-4) added to
+    `src/data/sources.ts` + `docs/research-sources.md` (kept in sync). 20/20 tests,
+    tsc/lint/build clean. Totals: 164 events, 154 sources, 8 projections.
 2026-09-18 — v0.7: Modern era (2020–2026) fully populated — the last empty band. 39 new
     events across 11 new data modules (one per track) + 34 new sources added to both
     `src/data/sources.ts` and `docs/research-sources.md` (kept in sync; DRAM backlog line

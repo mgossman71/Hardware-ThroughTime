@@ -73,6 +73,44 @@ export interface HistoricalEvent {
 }
 
 /**
+ * A forward-looking projection for a year AFTER the Modern era (2027+).
+ *
+ * Kept deliberately separate from `HistoricalEvent` to preserve the site's
+ * "no invented facts" policy: projections are estimates grounded in published
+ * vendor roadmaps and standards-body timelines, are rendered in a distinct
+ * "Projections" band, and are never counted as historical record.
+ */
+export type ProjectionConfidence = 'high' | 'medium' | 'low';
+
+export interface Projection {
+  /** Globally unique id, kebab-case, prefixed with "proj-". */
+  id: string;
+  /** Projected year (strictly after the Modern era's end year, 2026). */
+  year: number;
+  /** Primary track this projection belongs to (same tracks as events). */
+  track: TrackId;
+  title: string;
+  /** 1–2 sentence "what this is expected to be" description. */
+  summary: string;
+  /** Longer explanation of the roadmap basis and what landing it would mean. */
+  detailedDescription: string;
+  /** Manufacturer or standards body the projection is attributed to. */
+  manufacturer: string;
+  /** Best-known specifications at projection time (structured, comparable). */
+  specs: Record<string, number | string>;
+  /** What this projection would matter for, if it lands. */
+  significance: string;
+  /** Confidence in the estimate (drives the UI badge). */
+  confidence: ProjectionConfidence;
+  /** The published basis (vendor roadmap / standards timeline) for the estimate. */
+  basis: string;
+  /** ids into src/data/sources.ts backing the roadmap/standard this draws from. */
+  sourceIds: string[];
+  /** ids of related HistoricalEvents or Projections (cross-links). */
+  relatedEventIds?: string[];
+}
+
+/**
  * An image that can be attached to an event. Only include images with a
  * verifiable license/attribution. Prefer:
  *  - manufacturer press images with reuse rights,

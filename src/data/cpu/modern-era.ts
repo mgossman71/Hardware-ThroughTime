@@ -123,4 +123,49 @@ export const CPUS_MODERN: HistoricalEvent[] = [
     sourceIds: ['wiki-snapdragon-x'],
     relatedEventIds: ['apple-m4', 'windows-on-arm-snapdragon', 'intel-alder-lake'],
   },
+  {
+    id: 'intel-panther-lake',
+    year: 2026,
+    track: 'cpus',
+    title: 'Intel Core Ultra (Panther Lake)',
+    summary:
+      "Intel's first Intel 18A client chip — Cougar Cove P-cores, an NPU-5, and the launch product for the in-fab Ohio fabs.",
+    detailedDescription:
+      "Panther Lake (Core Ultra Series 3, 2026) is Intel's first client SoC built on the Intel 18A process: Cougar Cove P-cores paired with Darkmont E-cores, a 12-Xe \"Xe3-LPG\" integrated GPU, an NPU 5 rated up to 50 TOPS, and LPDDR5X-9600 or DDR5-7200 memory. Its significance is process as much as performance — it is the launch product for Intel 18A, Intel's first 2 nm-class node and its first major bet on manufacturing the die in its own Ohio fabs rather than TSMC.",
+    manufacturer: 'Intel',
+    specs: {
+      node: 'Intel 18A',
+      pCores: 'Cougar Cove',
+      eCores: 'Darkmont',
+      npu: 'NPU 5 (up to 50 TOPS)',
+      iGPU: 'Xe3-LPG (12 Xe-cores)',
+      memory: 'LPDDR5X-9600 / DDR5-7200',
+    },
+    significance:
+      "Panther Lake is the Modern era's process-node story as much as its performance story: it is the first ship of Intel 18A and the first Intel client chip fabricated in the new Ohio fabs — the moment \"Intel-made 2 nm\" becomes real for consumers.",
+    sourceIds: ['wiki-panther-lake'],
+    relatedEventIds: ['intel-alder-lake', 'amd-zen-4'],
+  },
+  {
+    id: 'amd-epyc-venice',
+    year: 2026,
+    track: 'cpus',
+    title: 'AMD Epyc "Venice" (Zen 6)',
+    summary:
+      'Up to 256 cores on TSMC 3 nm — the highest-core-count data-center x86 CPU of the era.',
+    detailedDescription:
+      'Epyc "Venice" (Epyc 9996, Zen 6, Q4 2026) scales the EPYC line to up to 256 cores on TSMC N2P/N6 with up to 1024 MB of L3 cache, 16-channel DDR5, and 5 GHz+ clock speeds. It is the peak of the Modern era\'s server core-count race and the reference AMD sets against NVIDIA Vera and Intel Xeon for the 2026–2027 data-center market, and it is the same Zen 6 silicon that the desktop generation (expected 2027) builds on.',
+    manufacturer: 'AMD',
+    specs: {
+      codename: 'Venice',
+      node: 'TSMC N2P (CCD) / N6 (IOD)',
+      cores: 'up to 256',
+      l3Cache: 'up to 1024 MB',
+      memory: '16-channel DDR5',
+    },
+    significance:
+      "Venice is the Modern era's data-center CPU peak: 256 cores and a terabyte-scale L3 push x86 server density further into the AI-inference era, and it is the same Zen 6 family that lands on the desktop in 2027.",
+    sourceIds: ['wiki-zen-6'],
+    relatedEventIds: ['amd-zen-4', 'intel-panther-lake'],
+  },
 ];

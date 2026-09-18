@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ERAS } from '../../data/eras';
-import type { Era, HistoricalEvent, TrackId } from '../../types/historical-event';
+import type { Era, HistoricalEvent, Projection, TrackId } from '../../types/historical-event';
 import { TRACKS } from '../../data/tracks';
 
 const PX_PER_YEAR = 80;
@@ -13,10 +13,15 @@ const AXIS_HEIGHT = 40;
 
 interface TimelineCanvasProps {
   events: HistoricalEvent[];
+  /** 2027+ roadmap estimates rendered in a distinct band (not in ALL_EVENTS). */
+  projections: Projection[];
   visibleTracks: Record<TrackId, boolean>;
   selectedId: string | null;
   onSelect: (event: HistoricalEvent) => void;
+  onSelectProjection: (projection: Projection) => void;
   onEraFocus: (era: Era) => void;
+  /** Focus the projection band (wired to the "Projections" chip / band label). */
+  onProjectionFocus: () => void;
   focusYear: number;
 }
 
@@ -31,10 +36,13 @@ interface TimelineCanvasProps {
  */
 export function TimelineCanvas({
   events,
+  projections,
   visibleTracks,
   selectedId,
   onSelect,
+  onSelectProjection,
   onEraFocus,
+  onProjectionFocus,
   focusYear,
 }: TimelineCanvasProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -43,10 +51,20 @@ export function TimelineCanvas({
   // era chip has a visible band to focus and the indicator line is always
   // reachable. Empty eras render as "no content yet" bands.
   const minYear = Math.min(...ERAS.map((e) => e.startYear));
-  const maxYear = Math.max(...ERAS.map((e) => e.endYear));
+  const eraMax = Math.max(...ERAS.map((e) => e.endYear));
+  // Extend the canvas past the Modern era only when there are projections to
+  // show, so the "Projections (2027+)" band has room on the right.
+  const maxYear = Math.max(eraMax, ...projections.map((p) => p.year));
   const width = (maxYear - minYear) * PX_PER_YEAR;
 
   const xFor = (year: number) => (year - minYear) * PX_PER_YEAR;
+
+  // The "2026 · present" divider sits on the boundary between the last
+  // historical year (2026) and the first projection year (2027).
+  const hasProjections = projections.length > 0;
+  const presentX = xFor(eraMax) + PX_PER_YEAR / 2;
+  const projZoneLeft = presentX;
+  const projZoneWidth = Math.max(0, width - presentX);
 
   const visibleTrackDefs = TRACKS.filter((t) => visibleTracks[t.id]);
 
@@ -188,6 +206,35 @@ export function TimelineCanvas({
           );
         })}
 
+        {/* Projection band (2027+) — distinct from the historical eras: a tinted
+            future zone, a "2026 · present" divider, and a clickable band label. */}
+        {hasProjections ? (
+          <>
+            <div
+              className="tl-proj-zone"
+              style={{ left: projZoneLeft, width: projZoneWidth }}
+              aria-hidden="true"
+            />
+            <button
+              type="button"
+              className="tl-proj-label"
+              style={{ left: projZoneLeft, width: projZoneWidth }}
+              onClick={onProjectionFocus}
+              aria-label="Focus the projections band (2027 and beyond)"
+            >
+              <span className="tl-proj-label__title mono">PROJECTIONS</span>
+              <span className="tl-proj-label__years mono">2027+</span>
+            </button>
+            <div
+              className="tl-proj-divider"
+              style={{ left: presentX }}
+              aria-hidden="true"
+            >
+              <span className="tl-proj-divider__label mono">{eraMax} · present</span>
+            </div>
+          </>
+        ) : null}
+
         {/* Year gridlines — faint vertical guides tying nodes to the axis */}
         {allYears.map((y) =>
           y % labelEvery === 0 ? (
@@ -211,32 +258,56 @@ export function TimelineCanvas({
 
         {/* Lanes */}
         <div className="tl-canvas__lanes">
-          {lanes.map(({ def, placed }) => (
-            <div
-              key={def.id}
-              className="tl-lane"
-              style={{ height: LANE_HEIGHT, '--track-accent': def.accent } as React.CSSProperties}
-            >
-              <span className="tl-lane__label">{def.label}</span>
-              {placed.map(({ event, x }) => {
-                const isSelected = event.id === selectedId;
-                return (
-                  <button
-                    key={event.id}
-                    type="button"
-                    className={`tl-event${isSelected ? ' tl-event--selected' : ''}`}
-                    style={{ left: x, top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
-                    onClick={() => onSelect(event)}
-                    aria-pressed={isSelected}
-                    title={`${event.title} (${event.year})`}
-                  >
-                    <span className="tl-event__dot" aria-hidden="true" />
-                    <span className="tl-event__label">{event.title}</span>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
+          {lanes.map(({ def, placed }) => {
+            const trackProjections = hasProjections
+              ? projections
+                  .filter((p) => p.track === def.id)
+                  .sort((a, b) => a.year - b.year || a.title.localeCompare(b.title))
+              : [];
+            return (
+              <div
+                key={def.id}
+                className="tl-lane"
+                style={{ height: LANE_HEIGHT, '--track-accent': def.accent } as React.CSSProperties}
+              >
+                <span className="tl-lane__label">{def.label}</span>
+                {placed.map(({ event, x }) => {
+                  const isSelected = event.id === selectedId;
+                  return (
+                    <button
+                      key={event.id}
+                      type="button"
+                      className={`tl-event${isSelected ? ' tl-event--selected' : ''}`}
+                      style={{ left: x, top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
+                      onClick={() => onSelect(event)}
+                      aria-pressed={isSelected}
+                      title={`${event.title} (${event.year})`}
+                    >
+                      <span className="tl-event__dot" aria-hidden="true" />
+                      <span className="tl-event__label">{event.title}</span>
+                    </button>
+                  );
+                })}
+                {trackProjections.map((proj) => {
+                  const isSelected = proj.id === selectedId;
+                  return (
+                    <button
+                      key={proj.id}
+                      type="button"
+                      className={`tl-event tl-event--projection${isSelected ? ' tl-event--selected' : ''}`}
+                      style={{ left: xFor(proj.year), top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
+                      onClick={() => onSelectProjection(proj)}
+                      aria-pressed={isSelected}
+                      title={`${proj.title} (~${proj.year}, projection)`}
+                    >
+                      <span className="tl-event__dot" aria-hidden="true" />
+                      <span className="tl-event__label">{proj.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
 
         {/* Year axis */}

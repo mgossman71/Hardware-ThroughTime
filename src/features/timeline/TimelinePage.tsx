@@ -5,9 +5,11 @@ import { TrackToggles } from './TrackToggles';
 import { TimelineCanvas } from './TimelineCanvas';
 import { EventList } from './EventList';
 import { EventDetail } from './EventDetail';
+import { ProjectionDetail } from './ProjectionDetail';
 import { ALL_EVENTS } from '../../data/registry';
+import { PROJECTIONS } from '../../data/projections';
 import { ERAS } from '../../data/eras';
-import type { Era, HistoricalEvent, TrackId } from '../../types/historical-event';
+import type { Era, HistoricalEvent, Projection, TrackId } from '../../types/historical-event';
 import { TRACKS } from '../../data/tracks';
 import './timeline.css';
 import './timeline-list.css';
@@ -18,11 +20,21 @@ const ALL_TRACKS_ON = Object.fromEntries(TRACKS.map((t) => [t.id, true])) as Rec
 >;
 
 const MIN_YEAR = Math.min(...ERAS.map((e) => e.startYear));
-const MAX_YEAR = Math.max(ERAS[ERAS.length - 1].endYear, ...ALL_EVENTS.map((e) => e.year));
+const MAX_YEAR = Math.max(
+  ERAS[ERAS.length - 1].endYear,
+  ...ALL_EVENTS.map((e) => e.year),
+  ...PROJECTIONS.map((p) => p.year),
+);
+
+/** The aside can show either a real event or a projection. */
+type Selection =
+  | { type: 'event'; event: HistoricalEvent }
+  | { type: 'projection'; projection: Projection };
 
 export default function TimelinePage() {
   const [visibleTracks, setVisibleTracks] = useState<Record<TrackId, boolean>>(ALL_TRACKS_ON);
-  const [selected, setSelected] = useState<HistoricalEvent | null>(null);
+  const [selected, setSelected] = useState<Selection | null>(null);
+  const [showProjections, setShowProjections] = useState(true);
   const [focusYear, setFocusYear] = useState<number>(1981);
 
   // Listen for focus-year events from other pages/features.
@@ -32,10 +44,27 @@ export default function TimelinePage() {
     setVisibleTracks((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  const handleSelect = useCallback((event: HistoricalEvent) => {
-    setSelected(event);
+  const handleSelectEvent = useCallback((event: HistoricalEvent) => {
+    setSelected({ type: 'event', event });
     setFocusYear(event.year);
     emitFocusYear(event.year);
+  }, []);
+
+  const handleSelectProjection = useCallback((projection: Projection) => {
+    setSelected({ type: 'projection', projection });
+    setFocusYear(projection.year);
+    emitFocusYear(projection.year);
+  }, []);
+
+  // Related links can point at a real event OR another projection.
+  const handleSelectRelated = useCallback((item: HistoricalEvent | Projection) => {
+    if ('confidence' in item) {
+      setSelected({ type: 'projection', projection: item });
+    } else {
+      setSelected({ type: 'event', event: item });
+    }
+    setFocusYear(item.year);
+    emitFocusYear(item.year);
   }, []);
 
   const handleEraFocus = useCallback((era: Era) => {
@@ -44,12 +73,28 @@ export default function TimelinePage() {
     emitFocusYear(mid);
   }, []);
 
+  const handleProjectionFocus = useCallback(() => {
+    const first = PROJECTIONS[0];
+    const year = first ? first.year : 2027;
+    setShowProjections(true);
+    setFocusYear(year);
+    emitFocusYear(year);
+  }, []);
+
   const handleScrub = useCallback((year: number) => {
     setFocusYear(year);
     emitFocusYear(year);
   }, []);
 
   const visibleEventCount = ALL_EVENTS.filter((e) => visibleTracks[e.track]).length;
+  const visibleProjectionCount = showProjections
+    ? PROJECTIONS.filter((p) => visibleTracks[p.track]).length
+    : 0;
+  const selectedId = selected
+    ? selected.type === 'event'
+      ? selected.event.id
+      : selected.projection.id
+    : null;
 
   return (
     <PageShell
@@ -82,6 +127,31 @@ export default function TimelinePage() {
                 </button>
               );
             })}
+
+            {/* Projections "era" chip — a distinct chip for the 2027+ band. */}
+            <button
+              type="button"
+              className={`era-chip era-chip--projection${showProjections ? ' era-chip--active' : ''}`}
+              onClick={handleProjectionFocus}
+              aria-pressed={showProjections}
+            >
+              <span className="era-chip__years mono">2027 →</span>
+              <span className="era-chip__name">Projections</span>
+            </button>
+          </div>
+
+          <div className="timeline-page__projection-toggle">
+            <button
+              type="button"
+              className="timeline-page__projection-toggle-btn"
+              onClick={() => setShowProjections((v) => !v)}
+              aria-pressed={showProjections}
+            >
+              {showProjections ? 'Hide projections (2027+)' : 'Show projections (2027+)'}
+            </button>
+            <span className="timeline-page__projection-hint mono">
+              Estimates from vendor roadmaps &amp; standards — not historical record.
+            </span>
           </div>
 
           <TrackToggles visible={visibleTracks} onToggle={toggleTrack} />
@@ -103,31 +173,46 @@ export default function TimelinePage() {
         </section>
 
         <p className="timeline-page__status" role="status" aria-live="polite">
-          {visibleEventCount} event{visibleEventCount === 1 ? '' : 's'} on the timeline
+          {visibleEventCount} event{visibleEventCount === 1 ? '' : 's'}
+          {visibleProjectionCount > 0
+            ? ` · ${visibleProjectionCount} projection${visibleProjectionCount === 1 ? '' : 's'}`
+            : ''}{' '}
+          on the timeline
         </p>
 
         <div className="timeline-page__body">
           <div className="timeline-page__canvas">
             <TimelineCanvas
               events={ALL_EVENTS}
+              projections={showProjections ? PROJECTIONS : []}
               visibleTracks={visibleTracks}
-              selectedId={selected?.id ?? null}
-              onSelect={handleSelect}
+              selectedId={selectedId}
+              onSelect={handleSelectEvent}
+              onSelectProjection={handleSelectProjection}
               onEraFocus={handleEraFocus}
+              onProjectionFocus={handleProjectionFocus}
               focusYear={focusYear}
             />
             <EventList
               events={ALL_EVENTS}
+              projections={showProjections ? PROJECTIONS : []}
               visibleTracks={visibleTracks}
-              selectedId={selected?.id ?? null}
-              onSelect={handleSelect}
+              selectedId={selectedId}
+              onSelect={handleSelectEvent}
+              onSelectProjection={handleSelectProjection}
             />
           </div>
-          {selected ? (
+          {selected?.type === 'event' ? (
             <EventDetail
-              event={selected}
+              event={selected.event}
               onClose={() => setSelected(null)}
-              onSelectRelated={handleSelect}
+              onSelectRelated={handleSelectRelated}
+            />
+          ) : selected?.type === 'projection' ? (
+            <ProjectionDetail
+              projection={selected.projection}
+              onClose={() => setSelected(null)}
+              onSelectRelated={handleSelectRelated}
             />
           ) : (
             <aside className="timeline-page__placeholder" aria-hidden="true">

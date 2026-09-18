@@ -2,6 +2,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { App } from '../App';
 import { ALL_EVENTS } from '../data/registry';
 import { SOURCES } from '../data/sources';
+import { PROJECTIONS } from '../data/projections';
 
 describe('App shell + timeline', () => {
   it('renders the site header and timeline with seeded events', async () => {
@@ -220,5 +221,45 @@ describe('data integrity', () => {
     expect(tracks.has('os')).toBe(true);
     expect(tracks.has('displays')).toBe(true);
     expect(tracks.has('interfaces')).toBe(true);
+  });
+
+  it('projections form a clean, sourced, future cohort (2027+)', () => {
+    expect(PROJECTIONS.length).toBeGreaterThanOrEqual(5);
+    const sourceIds = new Set(SOURCES.map((s) => s.id));
+    for (const p of PROJECTIONS) {
+      expect(p.year).toBeGreaterThanOrEqual(2027);
+      expect(p.sourceIds.length).toBeGreaterThan(0);
+      for (const id of p.sourceIds) {
+        expect(sourceIds.has(id)).toBe(true);
+      }
+      expect(['high', 'medium', 'low']).toContain(p.confidence);
+      expect(p.basis.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('new Modern-era backfill events resolve to real sources', () => {
+    const byId = new Map(ALL_EVENTS.map((e) => [e.id, e]));
+    const sourceIds = new Set(SOURCES.map((s) => s.id));
+    for (const id of ['intel-panther-lake', 'amd-epyc-venice', 'hbm4', 'amd-rdna-4-rx9070']) {
+      const e = byId.get(id);
+      expect(e).toBeDefined();
+      expect(e!.sourceIds.length).toBeGreaterThan(0);
+      for (const sid of e!.sourceIds) {
+        expect(sourceIds.has(sid)).toBe(true);
+      }
+    }
+  });
+
+  it('renders the projections band and dashed projection nodes by default', async () => {
+    const { container } = render(<App />);
+    await waitFor(() => {
+      expect(screen.getAllByText(/IBM PC \(5150\)/).length).toBeGreaterThan(0);
+    });
+    // The "Projections" control surfaces (era chip / toggle / band label).
+    expect(screen.getAllByText(/Projections/i).length).toBeGreaterThan(0);
+    // The distinct band: tinted zone + "present" divider + projection nodes.
+    expect(container.querySelector('.tl-proj-zone')).not.toBeNull();
+    expect(container.querySelector('.tl-proj-divider')).not.toBeNull();
+    expect(container.querySelectorAll('.tl-event--projection').length).toBeGreaterThan(0);
   });
 });
