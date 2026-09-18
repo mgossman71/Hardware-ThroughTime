@@ -98,6 +98,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 - Data defects surfaced by the integrity test are fixed in the same change.
 - The previously-empty `wifi` and `displays` tracks are now populated by the Performance Race era (802.11b/g; DVI + SXGA).
 - **Foundations era track coverage (2026-09-18):** every track with legitimate pre-1970 content got at least one event (computers, cpus, os, ram, storage, networking, graphics, displays, interfaces). `wifi` and `motherboards` are **deliberately left empty** — there is no honest, well-sourced pre-1970 content for those two tracks (802.11 began in 1997; standard PC expansion buses began in the 1980s), and the project's "never invent / no padding" policy wins over forcing coverage.
+- **GitHub workflow (2026-09-18):** prefer the GitHub CLI (`gh`) for all GitHub-bound work — issues, PRs, releases, CI status — over the web UI. Plain `git` remains the tool for local operations (add, commit, diff, log, status) and for pushing (`gh` 2.92.0 has no push subcommand).
 - **Sticky left gutter for the timeline legend (2026-09-18):** the user rejected the original design (lane labels absolute-positioned at the left edge of the scrollable canvas, so the legend disappeared when scrolling right). Chose Option A (CSS-only sticky gutter) over B (fixed sidebar restructure) and C (pinned color-key strip). Lane labels + era names are `position: sticky; left: 0`; era bands render oldest→newest so a newer era name naturally covers an older one's at the shared left position. Era label area (top 90px) and lane label area (top: 90px+) never overlap vertically. Initially shipped with an opaque `--bg-1` gutter background; user then asked for a **transparent gutter** so the era tint shows through — legibility is preserved with a `var(--bg-1)` text-shadow halo on both labels (event dots/titles passing underneath remain visible, halo keeps the gutter text crisp).
 
 ## Known Issues
@@ -135,6 +136,9 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   invoke as `/Applications/Docker.app/Contents/Resources/bin/docker` (start with `open -a Docker` if daemon is down).
 - **Remote:** public GitHub repo `https://github.com/mgossman71/Hardware-ThroughTime`
   (owner `mgossman71`, default branch `master`), configured as `origin`.
+- **GitHub CLI (`gh`):** sanctioned tool for GitHub-bound interactions (issues/PRs/releases/CI
+  status). `gh` 2.92.0 installed and authenticated as `mgossman71` (https protocol, repo scope).
+  Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
 2026-09-18 — Foundations era (1940–1969) fully populated: 23 new events across 9 new data modules
