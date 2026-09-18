@@ -5,7 +5,11 @@ import { TRACKS } from '../../data/tracks';
 
 const PX_PER_YEAR = 80;
 const LANE_HEIGHT = 64;
-const MIN_CLUSTER_SPACING = 90;
+/** Chip slot: must be >= max chip width so clustered nodes never overlap. */
+const MIN_CLUSTER_SPACING = 110;
+/** Era-label band (top) and year-axis (bottom) heights — must match timeline.css. */
+const ERA_LABEL_AREA = 90;
+const AXIS_HEIGHT = 40;
 
 interface TimelineCanvasProps {
   events: HistoricalEvent[];
@@ -45,6 +49,11 @@ export function TimelineCanvas({
   const xFor = (year: number) => (year - minYear) * PX_PER_YEAR;
 
   const visibleTrackDefs = TRACKS.filter((t) => visibleTracks[t.id]);
+
+  // The canvas hugs its lanes exactly (era-label band + one row per visible
+  // track + year axis), so the last lane is never clipped off-screen.
+  const innerHeight =
+    ERA_LABEL_AREA + visibleTrackDefs.length * LANE_HEIGHT + AXIS_HEIGHT;
 
   // Which eras have at least one event (any track) — used to mark empty bands.
   const eventsByEra = useMemo(() => {
@@ -142,7 +151,7 @@ export function TimelineCanvas({
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
     >
-      <div className="tl-canvas__inner" style={{ width }}>
+      <div className="tl-canvas__inner" style={{ width, height: innerHeight }}>
         {/* Era bands — full range, so every era chip has a visible target */}
         {ERAS.map((era) => {
           const x = xFor(Math.max(era.startYear, minYear));
@@ -179,6 +188,18 @@ export function TimelineCanvas({
           );
         })}
 
+        {/* Year gridlines — faint vertical guides tying nodes to the axis */}
+        {allYears.map((y) =>
+          y % labelEvery === 0 ? (
+            <span
+              key={`grid-${y}`}
+              className="tl-canvas__gridline"
+              style={{ left: xFor(y) }}
+              aria-hidden="true"
+            />
+          ) : null,
+        )}
+
         {/* Focus indicator — the "you are here" line; moves with focusYear */}
         <div
           className="tl-canvas__focus"
@@ -191,10 +212,12 @@ export function TimelineCanvas({
         {/* Lanes */}
         <div className="tl-canvas__lanes">
           {lanes.map(({ def, placed }) => (
-            <div key={def.id} className="tl-lane" style={{ height: LANE_HEIGHT }}>
-              <span className="tl-lane__label" style={{ color: def.accent }}>
-                {def.label}
-              </span>
+            <div
+              key={def.id}
+              className="tl-lane"
+              style={{ height: LANE_HEIGHT, '--track-accent': def.accent } as React.CSSProperties}
+            >
+              <span className="tl-lane__label">{def.label}</span>
               {placed.map(({ event, x }) => {
                 const isSelected = event.id === selectedId;
                 return (
@@ -202,7 +225,7 @@ export function TimelineCanvas({
                     key={event.id}
                     type="button"
                     className={`tl-event${isSelected ? ' tl-event--selected' : ''}`}
-                    style={{ left: x, top: LANE_HEIGHT / 2, background: def.accent }}
+                    style={{ left: x, top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
                     onClick={() => onSelect(event)}
                     aria-pressed={isSelected}
                     title={`${event.title} (${event.year})`}

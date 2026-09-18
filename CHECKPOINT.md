@@ -1,7 +1,7 @@
 # Project Checkpoint
 
 ## Current Goal
-Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. Only the Modern era (2020–2026) remains unpopulated.
+Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. Only the Modern era (2020–2026) remains unpopulated. **v0.6: timeline event nodes fully redesigned** (chip nodes on track spines, contrast-safe labels, dynamic canvas height, full state ladder).
 
 ## Current State
 - ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 16/16 pass.
@@ -62,6 +62,14 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
   - 23 new source entries in `src/data/sources.ts` + `docs/research-sources.md` (kept in sync).
   - `eras.ts`: Foundations `highlightEventIds` populated (16 ids).
   - `App.test.tsx`: empty-era assertion relaxed `>= 2` → `>= 1` (only Modern remains empty); new Foundations cohort test (≥20 events in 1940–1969 band + 9-track coverage).
+- **Timeline node redesign (2026-09-18, v0.6 — user-approved Option A "clean neutral chips"):**
+  - **Fixed a real layout bug:** canvas height was a static `620px`, so with all 11 tracks on the last 3 lanes (OS, displays, interfaces) were clipped off-screen. Height is now computed inline in `TimelineCanvas.tsx` (`90 + visibleLanes×64 + 40`) and matches `.tl-canvas__lanes`/`.tl-axis` in CSS.
+  - Event nodes are now one cohesive chip: solid `--bg-3` surface, 1px border, 8px track-accent dot, **12px near-white label (≈12:1 contrast, WCAG AAA)** wrapping to 2 lines with ellipsis. (Old design: 14px dot + floating 11px label on a full-accent-color button background with a near-invisible near-black ring.)
+  - Track identity = the accent dot only; gutter track names are now neutral `--text-1` + accent dot (`--track-accent` custom prop set per lane) instead of low-contrast accent-colored text.
+  - Added per-lane spine line (`.tl-lane::before`) and faint labeled-year gridlines (`.tl-canvas__gridline`) tying nodes to the axis.
+  - Full state ladder: hover (surface lift + accent glow), selected (accent-tinted surface + halo ring), `:focus-visible` outline.
+  - `MIN_CLUSTER_SPACING` 90 → 110px so 104px chips never overlap in clusters.
+  - Deferred (optional follow-up): compact/expanded density toggle.
 - **Timeline legend fix (2026-09-18): sticky left gutter.** Track lane labels (`.tl-lane__label`) and era names (`.tl-canvas__era-label`) are now `position: sticky; left: 0` so the "which lane / which era" legend stays pinned at the left edge while the canvas scrolls (Option A — CSS-only, no JS/test changes). Gutter width token `--lane-gutter: 132px` on `.tl-canvas`; z-order era (6) > lane (5) > focus line (4) > events (3) > era bands (1). User-reported design flaw: lane legend scrolled out of view when moving to later years.
 - **Transparent gutter (2026-09-18):** per user request the gutter is transparent — era tint shows through. Legibility over events scrolling underneath is preserved with a background-colored text halo on both labels: `text-shadow: 0 0 2px/6px/14px var(--bg-1)`. The 1px `border-right` separator is kept.
 
@@ -99,12 +107,14 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 - The previously-empty `wifi` and `displays` tracks are now populated by the Performance Race era (802.11b/g; DVI + SXGA).
 - **Foundations era track coverage (2026-09-18):** every track with legitimate pre-1970 content got at least one event (computers, cpus, os, ram, storage, networking, graphics, displays, interfaces). `wifi` and `motherboards` are **deliberately left empty** — there is no honest, well-sourced pre-1970 content for those two tracks (802.11 began in 1997; standard PC expansion buses began in the 1980s), and the project's "never invent / no padding" policy wins over forcing coverage.
 - **GitHub workflow (2026-09-18):** prefer the GitHub CLI (`gh`) for all GitHub-bound work — issues, PRs, releases, CI status — over the web UI. Plain `git` remains the tool for local operations (add, commit, diff, log, status) and for pushing (`gh` 2.92.0 has no push subcommand).
+- **Timeline node design (2026-09-18, user-approved Option A):** neutral chip + accent dot, chosen over bold accent pills (readability first) and a pin+label hybrid. Color identifies the track; label text is always high-contrast neutral, never the low-contrast accent. Canvas height hugs the visible lanes exactly (no clipping) instead of a fixed 620px. Cluster slot (110px) ≥ chip width (104px) preserves the "labels never overlap" invariant.
 - **Sticky left gutter for the timeline legend (2026-09-18):** the user rejected the original design (lane labels absolute-positioned at the left edge of the scrollable canvas, so the legend disappeared when scrolling right). Chose Option A (CSS-only sticky gutter) over B (fixed sidebar restructure) and C (pinned color-key strip). Lane labels + era names are `position: sticky; left: 0`; era bands render oldest→newest so a newer era name naturally covers an older one's at the shared left position. Era label area (top 90px) and lane label area (top: 90px+) never overlap vertically. Initially shipped with an opaque `--bg-1` gutter background; user then asked for a **transparent gutter** so the era tint shows through — legibility is preserved with a `var(--bg-1)` text-shadow halo on both labels (event dots/titles passing underneath remain visible, halo keeps the gutter text crisp).
 
 ## Known Issues
 - Placeholders for typical-pc / build-a-pc / compare / gallery — intentional (content pending).
 - No visual regression tests. No CI yet.
 - The era "empty" assertion in `App.test.tsx` is `>= 1` (currently exactly 1 empty era: Modern — Foundations, Performance Race, and Multi-Core are now populated).
+- Optional density toggle (compact dots ↔ expanded chips) not yet built — candidate follow-up if dense eras feel crowded.
 
 ## Work In Progress
 - None.
@@ -125,6 +135,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 - `npm run lint` → clean
 - `npm run build` → success (95 modules; sources chunk carries 115 sources)
 - `npx vitest run` → 16 passed (2 files), incl. data-integrity suite + four era cohort tests (Foundations, Multimedia, Performance Race, Multi-Core)
+- **Node redesign (v0.6):** `tsc -b` / `eslint` / `vitest` (16/16) / `vite build` all clean; Docker rebuilt; container-served TimelinePage bundle verified to contain the new node/gridline/`--track-accent` styles.
 - **Docker:** the user views the app at `http://10.0.0.86:8081/#/timeline`.
   After any content/UI change, run `docker compose up --build` so the new image is served.
   Verified this session: container-served JS bundles include the Foundations events/sources.
@@ -141,6 +152,12 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
+2026-09-18 — v0.6: timeline event nodes fully redesigned (user-approved Option A, "clean neutral chips").
+    Fixed lane-clipping bug (static 620px canvas → dynamic height; the last 3 lanes were
+    invisible with all tracks on). New chip nodes: solid --bg-3 surface, accent dot,
+    12px AAA-contrast 2-line label, per-lane spine + year gridlines, hover/selected/
+    focus-visible states, neutral gutter track names with accent dot, 110px cluster slot.
+    16/16 tests, tsc/eslint/build clean, Docker rebuilt + served bundle verified.
 2026-09-18 — Foundations era (1940–1969) fully populated: 23 new events across 9 new data modules
     (computers 5, cpus 3, os 3, ram 2, storage 2, networking 2, graphics 2, displays 2, interfaces 2).
     23 new sources added to both `src/data/sources.ts` and `docs/research-sources.md` (kept in sync).
