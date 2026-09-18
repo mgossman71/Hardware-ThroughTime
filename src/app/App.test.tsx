@@ -2,6 +2,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { App } from '../App';
 import { ALL_EVENTS } from '../data/registry';
 import { SOURCES } from '../data/sources';
+import { PROJECTIONS } from '../data/projections';
 
 describe('App shell + timeline', () => {
   it('renders the site header and timeline with seeded events', async () => {
@@ -75,9 +76,9 @@ describe('App shell + timeline', () => {
     const bands = container.querySelectorAll('.tl-canvas__era');
     expect(bands.length).toBe(7);
 
-    // Eras without content are flagged as such (only Modern remains empty now).
-    expect(container.querySelectorAll('.tl-canvas__era--empty').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText(/no entries yet/i).length).toBeGreaterThanOrEqual(1);
+    // All seven eras are now populated, so none should be flagged empty.
+    expect(container.querySelectorAll('.tl-canvas__era--empty').length).toBe(0);
+    expect(screen.queryAllByText(/no entries yet/i).length).toBe(0);
 
     // The "you are here" indicator exists and shows the initial focus year.
     const focus = container.querySelector<HTMLElement>('.tl-canvas__focus');
@@ -198,5 +199,67 @@ describe('data integrity', () => {
     expect(tracks.has('storage')).toBe(true);
     expect(tracks.has('interfaces')).toBe(true);
     expect(tracks.has('networking')).toBe(true);
+  });
+
+  it('has a solid cohort of Modern era events (2020–2026)', () => {
+    const inEra = ALL_EVENTS.filter((e) => e.year >= 2020 && e.year <= 2026);
+    expect(inEra.length).toBeGreaterThanOrEqual(30);
+    // Every in-era event carries at least one resolvable source.
+    for (const e of inEra) {
+      expect(e.sourceIds.length).toBeGreaterThan(0);
+    }
+    // The Modern era is the only era that spans all eleven tracks.
+    const tracks = new Set(inEra.map((e) => e.track));
+    expect(tracks.has('cpus')).toBe(true);
+    expect(tracks.has('graphics')).toBe(true);
+    expect(tracks.has('ram')).toBe(true);
+    expect(tracks.has('storage')).toBe(true);
+    expect(tracks.has('computers')).toBe(true);
+    expect(tracks.has('motherboards')).toBe(true);
+    expect(tracks.has('networking')).toBe(true);
+    expect(tracks.has('wifi')).toBe(true);
+    expect(tracks.has('os')).toBe(true);
+    expect(tracks.has('displays')).toBe(true);
+    expect(tracks.has('interfaces')).toBe(true);
+  });
+
+  it('projections form a clean, sourced, future cohort (2027+)', () => {
+    expect(PROJECTIONS.length).toBeGreaterThanOrEqual(5);
+    const sourceIds = new Set(SOURCES.map((s) => s.id));
+    for (const p of PROJECTIONS) {
+      expect(p.year).toBeGreaterThanOrEqual(2027);
+      expect(p.sourceIds.length).toBeGreaterThan(0);
+      for (const id of p.sourceIds) {
+        expect(sourceIds.has(id)).toBe(true);
+      }
+      expect(['high', 'medium', 'low']).toContain(p.confidence);
+      expect(p.basis.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('new Modern-era backfill events resolve to real sources', () => {
+    const byId = new Map(ALL_EVENTS.map((e) => [e.id, e]));
+    const sourceIds = new Set(SOURCES.map((s) => s.id));
+    for (const id of ['intel-panther-lake', 'amd-epyc-venice', 'hbm4', 'amd-rdna-4-rx9070']) {
+      const e = byId.get(id);
+      expect(e).toBeDefined();
+      expect(e!.sourceIds.length).toBeGreaterThan(0);
+      for (const sid of e!.sourceIds) {
+        expect(sourceIds.has(sid)).toBe(true);
+      }
+    }
+  });
+
+  it('renders the projections band and dashed projection nodes by default', async () => {
+    const { container } = render(<App />);
+    await waitFor(() => {
+      expect(screen.getAllByText(/IBM PC \(5150\)/).length).toBeGreaterThan(0);
+    });
+    // The "Projections" control surfaces (era chip / toggle / band label).
+    expect(screen.getAllByText(/Projections/i).length).toBeGreaterThan(0);
+    // The distinct band: tinted zone + "present" divider + projection nodes.
+    expect(container.querySelector('.tl-proj-zone')).not.toBeNull();
+    expect(container.querySelector('.tl-proj-divider')).not.toBeNull();
+    expect(container.querySelectorAll('.tl-event--projection').length).toBeGreaterThan(0);
   });
 });

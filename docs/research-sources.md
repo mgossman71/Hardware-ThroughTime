@@ -1028,12 +1028,346 @@ least one entry here via its `sourceIds`.
   - NLS / oN-Line System
   - Introduced mouse, hypertext, windows, video conferencing
 
+### wiki-amd-zen-3 — AMD Ryzen (Zen 3)
+- **Publisher:** Wikipedia (citing AMD)
+- **URL:** https://en.wikipedia.org/wiki/AMD_Ryzen
+- **Facts used:**
+  - Ryzen 4000 (Vermeer) launched 5 November 2020
+  - TSMC 7 nm
+  - Zen 3: 8 cores per CCD, single shared L3 cache
+  - IPC gain up to ~19% vs Zen 2
+  - Ryzen 9 3950X: 16 cores / 32 threads
+
+### wiki-alder-lake — Alder Lake
+- **Publisher:** Wikipedia (citing Intel)
+- **URL:** https://en.wikipedia.org/wiki/Alder_Lake
+- **Facts used:**
+  - Announced 7 December 2021
+  - First hybrid P-core + E-core x86 desktop design
+  - Intel 7 (P-cores) / Intel 4 (E-cores)
+  - Core i9-12900K: 8P + 8E = 16 cores / 24 threads
+  - LGA 1700 socket, DDR5 / DDR4
+
+### wiki-amd-zen-4 — AMD Ryzen (Zen 4)
+- **Publisher:** Wikipedia (citing AMD)
+- **URL:** https://en.wikipedia.org/wiki/AMD_Ryzen
+- **Facts used:**
+  - Ryzen 7000 launched 4 November 2022
+  - TSMC 5 nm
+  - Zen 4: 32 KB L1D, AVX-512 on desktop
+  - Ryzen 9 7950X: 16 cores / 32 threads
+  - AM5 socket, DDR5
+
+### wiki-apple-m4 — Apple M4
+- **Publisher:** Wikipedia (citing Apple)
+- **URL:** https://en.wikipedia.org/wiki/Apple_M4
+- **Facts used:**
+  - Debuted 7 May 2024 (iPad Pro 13-inch)
+  - TSMC N3B (3 nm)
+  - Up to 10-core CPU (M4 Max)
+  - Up to 32-core GPU with hardware RT (M4 Max)
+  - 16-core Neural Engine, ~38 TOPS
+
+### wiki-snapdragon-x — Snapdragon X
+- **Publisher:** Wikipedia (citing Qualcomm)
+- **URL:** https://en.wikipedia.org/wiki/Snapdragon_X
+- **Facts used:**
+  - Announced 15 October 2024
+  - 15 Oryon cores (12 performance + 3 efficiency)
+  - TSMC 4 nm
+  - Hexagon NPU, ~45 TOPS
+  - Windows on ARM; Microsoft Prism x86 emulation
+
+### wiki-ampere — Ampere (microarchitecture)
+- **Publisher:** Wikipedia (citing NVIDIA)
+- **URL:** https://en.wikipedia.org/wiki/Ampere_(microarchitecture)
+- **Facts used:**
+  - GA102 / RTX 3090, launched 24 September 2020
+  - TSMC 8 nm
+  - 2nd-gen RT cores, 3rd-gen Tensor cores
+  - DLSS 2.0 (deep learning super sampling)
+
+### wiki-ada-lovelace — Ada Lovelace (microarchitecture)
+- **Publisher:** Wikipedia (citing NVIDIA)
+- **URL:** https://en.wikipedia.org/wiki/Ada_Lovelace_(microarchitecture)
+- **Facts used:**
+  - AD102 / RTX 4090, announced 12 Oct / shipped 16 Nov 2022
+  - TSMC 4 nm
+  - 4th-gen Tensor cores, 3rd-gen RT cores
+  - DLSS 3.0 Frame Generation
+  - ~2–4× perf/watt vs RTX 30
+
+### wiki-intel-arc — Intel Arc
+- **Publisher:** Wikipedia (citing Intel)
+- **URL:** https://en.wikipedia.org/wiki/Intel_Arc
+- **Facts used:**
+  - Arc Alchemist (ACM-G10), Arc A750 launched 27 December 2022
+  - Xe-HPG architecture
+  - 8 Xe-cores, 8 GB GDDR6
+  - Native AV1 encode/decode
+  - First credible Intel discrete GPU since Larrabee
+
+### wiki-rdna-3 — RDNA 3
+- **Publisher:** Wikipedia (citing AMD)
+- **URL:** https://en.wikipedia.org/wiki/RDNA_3
+- **Facts used:**
+  - RX 7900 XTX (Navi 31), 2023
+  - First fully chiplet desktop GPU (GCD + IOD)
+  - TSMC 5 nm (GCD) / 6 nm (IOD)
+  - 24 GB GDDR6, integrated iGPU on IOD
+  - Infinity Fabric
+
+### wiki-rdna-4 — RDNA 4
+- **Publisher:** Wikipedia (citing AMD)
+- **URL:** https://en.wikipedia.org/wiki/RDNA_4
+- **Facts used:**
+  - Radeon RX 9000 series (RX 9070, RX 9070 XT), 2025
+  - Successor to RDNA 3
+  - TSMC N4P / N3E (4 nm / 3 nm) node
+  - GDDR6 / GDDR7 memory
+  - Targeted at 1440p / high-refresh QHD
+
+### wiki-blackwell — Blackwell (microarchitecture)
+- **Publisher:** Wikipedia (citing NVIDIA)
+- **URL:** https://en.wikipedia.org/wiki/Blackwell_(microarchitecture)
+- **Facts used:**
+  - B200 / RTX 50 series, announced GTC March 2024, consumer 2025
+  - 5th-gen Tensor cores, FP4/FP8 data path
+  - 4th-gen Transformer Engine
+  - DLSS 4 Multi-Frame Generation
+  - Same silicon family as the B200 data-center GPU
+
+### wiki-high-bandwidth-memory — High Bandwidth Memory
+- **Publisher:** Wikipedia (citing JEDEC / SK hynix / Samsung)
+- **URL:** https://en.wikipedia.org/wiki/High_Bandwidth_Memory
+- **Facts used:**
+  - HBM2E: 8-hi stacks, ~2.0 TB/s (A100, 80 GB)
+  - HBM3: 12-hi, 1024-bit bus, ~1.2 TB/s per stack
+  - Stacked DRAM, TSV, silicon interposer
+  - Trade capacity-per-dollar for raw bandwidth
+
+### wiki-ddr5-sdram — DDR5 SDRAM
+- **Publisher:** Wikipedia (citing JEDEC)
+- **URL:** https://en.wikipedia.org/wiki/DDR5_SDRAM
+- **Facts used:**
+  - JEDEC JESD79-5
+  - Base rate 4800 MT/s
+  - 1.1 V nominal
+  - Two 32-bit sub-channels per DIMM
+  - On-die ECC
+  - Adopted with Intel 12th-gen (LGA 1700) / AMD AM5
+
+### wiki-nvidia-h200 — Nvidia H200
+- **Publisher:** Wikipedia (citing NVIDIA)
+- **URL:** https://en.wikipedia.org/wiki/Nvidia_H200
+- **Facts used:**
+  - 2024, Hopper GPU
+  - 141 GB HBM3E
+  - ~4.8 TB/s bandwidth
+  - ~1.4× the H100's 80 GB
+
+### wiki-pci-express — PCI Express
+- **Publisher:** Wikipedia (citing PCI-SIG)
+- **URL:** https://en.wikipedia.org/wiki/PCI_Express
+- **Facts used:**
+  - PCIe 4.0 (2017): 16 GT/s, x16 = 32 GB/s
+  - PCIe 5.0 (2019 spec): 32 GT/s, x16 = 64 GB/s
+  - PCIe 6.0 (2022 spec): 64 GT/s, x16 = 128 GB/s
+  - 128b/130b encoding through 5.0; FLIT in 6.0
+  - x4 NVMe = the SSD transport
+
+### wiki-samsung-990-pro — Samsung 990 Pro
+- **Publisher:** Wikipedia (citing Samsung)
+- **URL:** https://en.wikipedia.org/wiki/Samsung_990_Pro
+- **Facts used:**
+  - 2022, PCIe 4.0 ×4 NVMe
+  - ~7,450 MB/s read, ~6,900 MB/s write
+  - 96-layer V-NAND
+  - Top of the PCIe 4.0 consumer line
+
+### wiki-samsung-990-pro-2 — Samsung 990 Pro 2
+- **Publisher:** Wikipedia (citing Samsung)
+- **URL:** https://en.wikipedia.org/wiki/Samsung_990_Pro_2
+- **Facts used:**
+  - 2023, PCIe 5.0 ×4 NVMe
+  - ~12,400 MB/s read
+  - Requires PCIe 5.0 platform (Intel 13th/14th-gen, AMD X670E)
+  - Heatsink required
+
+### wiki-apple-m1 — Apple M1
+- **Publisher:** Wikipedia (citing Apple)
+- **URL:** https://en.wikipedia.org/wiki/Apple_M1
+- **Facts used:**
+  - 10 November 2020 (iMac / MacBook Air / MacBook Pro 13")
+  - TSMC 5 nm, 16 billion transistors
+  - 8-core CPU (4 performance + 4 efficiency)
+  - 7–8-core GPU, hardware ray tracing
+  - 8–16 GB unified memory, 16-core Neural Engine (~11 TOPS)
+
+### wiki-steam-deck — Steam Deck
+- **Publisher:** Wikipedia (citing Valve)
+- **URL:** https://en.wikipedia.org/wiki/Steam_Deck
+- **Facts used:**
+  - Launched 25 February 2022
+  - Custom AMD APU: 4× Zen 2 + 8× RDNA 2
+  - 7" 1280×800 60 Hz display
+  - 64 GB–1 TB NVMe (user-replaceable)
+  - SteamOS 3.0 (Arch-based Linux)
+
+### wiki-asus-rog-ally — ASUS ROG Ally
+- **Publisher:** Wikipedia (citing ASUS)
+- **URL:** https://en.wikipedia.org/wiki/ASUS_ROG_Ally
+- **Facts used:**
+  - Launched 13 December 2023
+  - AMD Ryzen Z1 Extreme (Zen 3 + RDNA 2)
+  - 7" 1920×1080 IPS 60 Hz
+  - 16 GB LPDDR5, 52 Wh battery
+  - Windows 11
+
+### wiki-apple-vision-pro — Apple Vision Pro
+- **Publisher:** Wikipedia (citing Apple)
+- **URL:** https://en.wikipedia.org/wiki/Apple_Vision_Pro
+- **Facts used:**
+  - Launched 2 February 2024
+  - Apple M2 + Apple R1
+  - 2× micro-OLED, ~23M pixels total
+  - < 12 ms motion-to-photon
+  - visionOS, US$3,499
+
+### wiki-atx — ATX
+- **Publisher:** Wikipedia (citing Intel / PCI-SIG)
+- **URL:** https://en.wikipedia.org/wiki/ATX
+- **Facts used:**
+  - ATX 2.5 (2021): PCIe 4.0, higher-current 12V
+  - ATX 3.0 (September 2022): 12VHPWR, 450 W min PSU, PCIe 5.0 ×16
+  - ATX 3.1 (November 2024): 12V-2x6 keyed connector, 690 W min PSU
+  - 12VHPWR = 16-pin, 3 A/pin, ~450 W slot
+
+### wiki-2-5-gigabit-ethernet — 2.5 Gigabit Ethernet
+- **Publisher:** Wikipedia (citing IEEE)
+- **URL:** https://en.wikipedia.org/wiki/2.5_Gigabit_Ethernet
+- **Facts used:**
+  - IEEE 802.3, 2.5 Gbit/s
+  - Single twisted pair, RJ-45
+  - Backward-compatible with 10/100/1000BASE-T
+  - On-board default on enthusiast boards 2020–2022 (Intel I225/I226, Realtek RTL8125)
+
+### wiki-10gbase-t-bz — 10GBASE-T (802.3bz, consumer)
+- **Publisher:** Wikipedia (citing IEEE)
+- **URL:** https://en.wikipedia.org/wiki/10GBASE-T
+- **Facts used:**
+  - IEEE 802.3bz, 10 Gbit/s
+  - 4 twisted pairs, RJ-45, up to 30 m
+  - Backward-compatible to 1/2.5/5 GbE
+  - Consumer NICs 2022–2024 (Intel X550/X710, Marvell)
+
+### wiki-wifi-6e — Wi-Fi 6E
+- **Publisher:** Wikipedia (citing Wi-Fi Alliance / IEEE)
+- **URL:** https://en.wikipedia.org/wiki/Wi-Fi_6E
+- **Facts used:**
+  - 802.11ax, 6 GHz band
+  - FCC 6 GHz authorization 2020; products 2021
+  - 12× 80 MHz or 2× 160 MHz channels
+  - OFDMA, MU-MIMO, BSS coloring
+  - ~9.6 Gbit/s (160 MHz)
+
+### wiki-wifi-7 — Wi-Fi 7
+- **Publisher:** Wikipedia (citing Wi-Fi Alliance / IEEE)
+- **URL:** https://en.wikipedia.org/wiki/Wi-Fi_7
+- **Facts used:**
+  - 802.11be, ratified 2024, products 2023–2024
+  - 320 MHz channels (6 GHz)
+  - 4096-QAM, up to 32 spatial streams
+  - Peak ~46 Gbit/s
+  - Multi-Link Operation (MLO)
+
+### wiki-macos-big-sur — macOS Big Sur
+- **Publisher:** Wikipedia (citing Apple)
+- **URL:** https://en.wikipedia.org/wiki/macOS_Big_Sur
+- **Facts used:**
+  - Released 30 November 2020 (macOS 11)
+  - First macOS to support x86-64 and ARM64
+  - Universal binaries, Rosetta 2
+  - New Aqua/Big Sur design
+
+### wiki-windows-11 — Windows 11
+- **Publisher:** Wikipedia (citing Microsoft)
+- **URL:** https://en.wikipedia.org/wiki/Windows_11
+- **Facts used:**
+  - Released 5 October 2021 (NT 10.0.22000)
+  - Centered Start menu / taskbar, Fluent design
+  - Snap Layouts
+  - TPM 2.0 + Secure Boot required
+
+### wiki-windows-on-arm — Windows on ARM
+- **Publisher:** Wikipedia (citing Microsoft / Qualcomm)
+- **URL:** https://en.wikipedia.org/wiki/Windows_on_ARM
+- **Facts used:**
+  - Windows on ARM (WoA) platform
+  - Surface Pro 9 5G (2022, Snapdragon 8cx) first widely-available WoA laptop
+  - Prism x86/x64 emulation
+  - Snapdragon X (2024) makes it mainstream
+
+### wiki-mini-led — Mini-LED
+- **Publisher:** Wikipedia (citing panel makers / Apple)
+- **URL:** https://en.wikipedia.org/wiki/Mini-LED
+- **Facts used:**
+  - Mini-LED backlight with local dimming
+  - Thousands of dimming zones
+  - MacBook Pro 14"/16" (2021) "Liquid Retina XDR"
+  - 1000 nits sustained / 1600 nits peak, ~11.8M pixels (16")
+
+### wiki-oled-display — OLED
+- **Publisher:** Wikipedia (citing display industry)
+- **URL:** https://en.wikipedia.org/wiki/OLED
+- **Facts used:**
+  - OLED is self-emissive (no backlight)
+  - True blacks, near-infinite contrast, wide color gamut
+  - Faster response than LCD
+  - Adopted in premium laptops 2021+ and 4K monitors 2024+
+
+### wiki-thunderbolt-4 — Thunderbolt 4
+- **Publisher:** Wikipedia (citing Intel)
+- **URL:** https://en.wikipedia.org/wiki/Thunderbolt_4
+- **Facts used:**
+  - 2020 (Intel)
+  - 40 Gbit/s bidirectional over USB-C
+  - Guaranteed baseline: 40 Gbps, 4K/5K display, 100 W USB-PD
+  - DisplayPort 1.4, PCIe tunneling
+
+### wiki-usb4 — USB4
+- **Publisher:** Wikipedia (citing USB-IF)
+- **URL:** https://en.wikipedia.org/wiki/USB4
+- **Facts used:**
+  - USB-IF standard, 2019 spec (products from 2020)
+  - 20 Gbit/s (USB4 1.0); 40 Gbit/s (USB4 V2, 2022)
+  - USB-C, mandatory DisplayPort alt-mode + PCIe tunneling
+  - Open implementation of the Thunderbolt 3/4 link
+
+### wiki-displayport — DisplayPort
+- **Publisher:** Wikipedia (citing VESA)
+- **URL:** https://en.wikipedia.org/wiki/DisplayPort
+- **Facts used:**
+  - DisplayPort 2.0 (2022, DP2.1 in 2024)
+  - 80 Gbit/s (UHBR10)
+  - Display Stream Compression (DSC) mandatory
+  - 4K@240 Hz, 8K@60 Hz
+
+### wiki-thunderbolt-5 — Thunderbolt 5
+- **Publisher:** Wikipedia (citing Intel)
+- **URL:** https://en.wikipedia.org/wiki/Thunderbolt_5
+- **Facts used:**
+  - Announced 2023, products 2024
+  - 80 Gbit/s bidirectional (120 Gbit/s asymmetric for video)
+  - USB-C, PCIe Gen 4 tunneling
+  - DisplayPort 2.1
+
 ## Sources still needed (research backlog)
 
 - [x] Pentium III / Pentium 4 (Intel) — `wiki-pentium-3`, `wiki-pentium-4`
 - [ ] AMD K6 / Phenom / Zen / Ryzen (AMD press) — Athlon line done: `wiki-amd-athlon`, `wiki-amd-athlon-xp`, `wiki-amd-athlon-64`
 - [x] NVIDIA GeForce 256 (NVIDIA) — `wiki-geforce-256`, `wiki-geforce-3`, `wiki-geforce-8800` (RIVA/TNT still missing)
-- [x] DRAM beyond EDO/SDRAM: DDR, DDR2, DDR3 (JEDEC / Intel / Micron) — `wiki-ddr-sdram`, `wiki-ddr2`, `wiki-ddr3` (DDR4/DDR5 still missing)
+- [x] DRAM beyond EDO/SDRAM: DDR, DDR2, DDR3, DDR4, DDR5 (JEDEC / Intel / Micron) — `wiki-ddr-sdram`, `wiki-ddr2`, `wiki-ddr3`, `wiki-ddr4`, `wiki-ddr5-sdram`
 - [ ] NVMe (NVMe.org)
 - [ ] Token Ring (IEEE 802.5)
 - [x] Wi-Fi 802.11 b/g (IEEE / Wi-Fi Alliance) — `wiki-802-11b`, `wiki-802-11g` (802.11a/n still missing)
