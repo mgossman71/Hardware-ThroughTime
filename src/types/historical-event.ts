@@ -232,7 +232,7 @@ export interface TypicalPc {
   expansionBus: string | null;
   operatingSystem: string;
   priceUsd: number | null;
-  priceInflatedUsd2025: number | null;
+  priceInflatedUsd2024: number | null;
   /** CPI basis used for the inflation conversion. */
   inflationBasis?: string;
   /** Free-form caveats — configurations varied enormously year to year. */

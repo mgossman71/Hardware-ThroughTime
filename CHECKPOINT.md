@@ -7,7 +7,7 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
 - ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 17/17 pass.
 - ✅ Timeline engine: `TimelineCanvas` (era bands, cluster compression, drag-to-scroll, focus-year indicator), `TrackToggles`, `EventList` (mobile fallback), `EventDetail`.
 - ✅ Data layer: `HistoricalEvent` type, `tracks.ts`, `sources.ts` (149 sources), `registry.ts` (160 events: 1970s–80s seed + full Foundations era (1940–1969) + full Multimedia era (1985–1997) + full Performance Race era (1998–2009) + full Multi-Core era (2010–2019) + full Modern era (2020–2026) — **all seven eras complete**).
-- ✅ Pages: `/`, `/typical-pc`, `/build-a-pc`, `/compare`, `/gallery` (placeholders), `/sources` (functional).
+- ✅ Pages: `/`, `/typical-pc` (functional — 24 milestone years 1977–2026), `/build-a-pc`, `/compare`, `/gallery` (placeholders), `/sources` (functional).
 - ✅ Data integrity tests: unique event/source ids, all `sourceIds` and `relatedEventIds` resolve, era cohort sizes for the Foundations, Multimedia, Performance Race, Multi-Core, and Modern eras (Modern spans all 11 tracks; the "no empty era" assertion now expects 0 empty bands).
 - ✅ Projections (2027+): `src/data/projections.ts` (8 cited, confidence-rated), `ProjectionDetail.tsx` panel, canvas "future" band (`.tl-proj-zone` / `.tl-proj-divider` / `.tl-proj-label` + `.tl-event--projection` nodes), a "Projections" era chip + show/hide toggle in `TimelinePage`, and a "Projections (2027+)" section in the mobile `EventList`. Kept OUT of `ALL_EVENTS`.
 - ✅ Cross-page state: `src/app/focusYear.ts` (useSyncExternalStore) — no circular imports.
@@ -129,7 +129,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 - **Sticky left gutter for the timeline legend (2026-09-18):** the user rejected the original design (lane labels absolute-positioned at the left edge of the scrollable canvas, so the legend disappeared when scrolling right). Chose Option A (CSS-only sticky gutter) over B (fixed sidebar restructure) and C (pinned color-key strip). Lane labels + era names are `position: sticky; left: 0`; era bands render oldest→newest so a newer era name naturally covers an older one's at the shared left position. Era label area (top 90px) and lane label area (top: 90px+) never overlap vertically. Initially shipped with an opaque `--bg-1` gutter background; user then asked for a **transparent gutter** so the era tint shows through — legibility is preserved with a `var(--bg-1)` text-shadow halo on both labels (event dots/titles passing underneath remain visible, halo keeps the gutter text crisp).
 
 ## Known Issues
-- Placeholders for typical-pc / build-a-pc / compare / gallery — intentional (content pending).
+- Placeholders for build-a-pc / compare / gallery — intentional (content pending).
 - No visual regression tests. No CI yet.
 - The era "empty" assertion in `App.test.tsx` is `>= 1` (currently exactly 1 empty era: Modern — Foundations, Performance Race, and Multi-Core are now populated).
 - Optional density toggle (compact dots ↔ expanded chips) not yet built — candidate follow-up if dense eras feel crowded.
@@ -142,7 +142,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 2. ~~Populate Multi-Core era (2010–2019)~~ — **done (v0.4).**
 3. ~~Populate Foundations era (1940–1969)~~ — **done (v0.5).** ~~Populate Modern era (2020–2026)~~ — **done (v0.7); all seven eras are now populated.**
 4. ~~Projections (2027+) band + 2025–2026 backfill~~ — **done (v0.8).** Distinct "future" band (`.tl-proj-zone`/`.tl-proj-divider`/`.tl-proj-label` + dashed `.tl-event--projection` nodes), `ProjectionDetail` panel, "Projections" era chip + show/hide toggle, mobile `EventList` section. Sourced backfill: Intel Panther Lake (2026), AMD EPYC "Venice" (2026), HBM4 (2026), AMD RX 9070 / RDNA 4 (2025). 8 cited, confidence-rated projections in `src/data/projections.ts`, kept OUT of `ALL_EVENTS`.
-5. Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote.
+5. ~~Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote~~ — **done (v0.9).**
 6. Begin Build-a-PC: era component pool data model (`EraComponent` type already exists), then interactive build UI.
 7. Begin era-comparison: `ComparePage` with honest-ratio callouts.
 8. Add gallery with licensed/attributed photography (label illustration vs. photo per spec).
@@ -172,6 +172,17 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
+2026-09-18 — v0.9: Typical PC tab shipped. Replaced the `/typical-pc` placeholder with a
+    data-driven page: `src/data/typical-pc.ts` (24 milestone years, 1977–2026; CPU/RAM/GPU/
+    storage/network/sound/display/OS/price per year, reference machines, caveats, and
+    `priceInflatedUsd2024` from BLS CPI-U annual averages), `TypicalPcPage.tsx` (era-grouped
+    year rail, `radiogroup` semantics) + `TypicalPcCard.tsx` (`aria-live` card) +
+    `typical-pc.css`. Year selection emits `focusYear` to re-theme the site. 5 new sources
+    added to `src/data/sources.ts` + `docs/research-sources.md` (MS-DOS, Modem, Radeon X800,
+    Windows 7, BLS CPI-U); `TypicalPc` type's inflation field re-anchored to the official
+    2024 annual average (313.7). New `src/data/typical-pc.test.ts` (uniqueness, source
+    resolution, field presence, inflation math ±$100, era containment, snap) +
+    `TypicalPcPage.test.tsx` (rail render, year switch). README status → ✅.
 2026-09-18 — v0.8: Projections (2027+) band on the timeline + 2025–2026 backfill. Added a
     distinct, toggleable "future" band: tinted zone (`.tl-proj-zone`), dashed nodes
     (`.tl-event--projection` + hollow dot), a "2026 · present" divider, a clickable band label,
