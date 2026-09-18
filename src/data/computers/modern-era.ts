@@ -27,6 +27,16 @@ export const COMPUTERS_MODERN: HistoricalEvent[] = [
     },
     significance:
       'M1 is the pivot of the Modern Mac: it proved ARM could be the default laptop architecture in the consumer market, and its unified-memory design became the template that every "AI PC" (Snapdragon X, and Apple\'s own M2–M4) has since followed.',
+    images: [
+      {
+        url: '/images/gallery/apple-m1.jpg',
+        alt: "Illustration of Apple's M1 processor",
+        attribution: 'Henriok, via Wikimedia Commons',
+        license: 'CC0 1.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Apple_M1.jpg',
+        kind: 'diagram',
+      },
+    ],
     sourceIds: ['wiki-apple-m1'],
     relatedEventIds: ['apple-m4', 'snapdragon-x-elite', 'macos-big-sur'],
   },
@@ -51,6 +61,16 @@ export const COMPUTERS_MODERN: HistoricalEvent[] = [
     },
     significance:
       'The Steam Deck is the era\'s statement that a full x86 PC can live in a handheld: it created the "PC gaming handheld" category, proved Linux can run the Steam catalog well enough, and forced the whole industry (ROG Ally, Legion Go) to compete in a brand-new form factor.',
+    images: [
+      {
+        url: '/images/gallery/steam-deck.jpg',
+        alt: 'Front view of a Steam Deck handheld PC',
+        attribution: 'Liam Dawe (GamingOnLinux), via Wikimedia Commons',
+        license: 'CC BY-SA 4.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Steam_Deck_(front).jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-steam-deck'],
     relatedEventIds: ['asus-rog-ally', 'amd-rdna-3'],
   },

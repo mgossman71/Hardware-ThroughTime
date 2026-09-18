@@ -30,6 +30,16 @@ export const EARLY_CPUS: HistoricalEvent[] = [
     },
     significance:
       'Established the microprocessor as a practical, manufacturable component. Without it, the hobbyist microcomputer movement of 1974–1977 — and therefore the PC itself — would not have happened on that timeline.',
+    images: [
+      {
+        url: '/images/gallery/intel-4004.jpg',
+        alt: 'The Intel 4004 microprocessor in its open package, manufactured by Intel in the United States, 1971',
+        attribution: 'the Science Museum, via Wikimedia Commons',
+        license: 'CC BY 4.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Intel_4004_open.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-intel-4004'],
     relatedEventIds: ['intel-8008', 'intel-8080'],
   },

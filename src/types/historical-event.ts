@@ -135,6 +135,8 @@ export interface ImageRef {
   attribution: string;
   /** License, e.g. "CC BY-SA 4.0", "public domain", "manufacturer press release". */
   license: string;
+  /** Optional page the image should be attributed back to (e.g. the Wikimedia Commons file page), linked in the UI. */
+  sourcePage?: string;
   /**
    * 'photo' = a real photograph of the actual hardware,
    * 'diagram' = an illustration/SVG/CSS recreation (not the real object),
