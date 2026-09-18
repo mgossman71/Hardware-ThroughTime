@@ -1,0 +1,83 @@
+/* ============================================================
+   ERA THEMES
+   Each era sets CSS custom properties on the app root so the
+   whole page shifts character as the user moves through time.
+   Values are sourced from `src/data/eras.ts` (kept in sync).
+   ============================================================ */
+
+/* Default (modern) is already in :root. Per-era overrides below are
+   applied by the App via inline style, but we define named blocks
+   here for reference and any era-scoped CSS that needs to key off
+   the era id (e.g. body[data-era="birth-pc"]). */
+
+body[data-era='foundations'] {
+  --accent: #c9a86a;
+  --accent-2: #8a6d3b;
+  --surface-tint: rgba(120, 90, 40, 0.08);
+  --scanline-opacity: 0.12;
+}
+
+body[data-era='micro-revolution'] {
+  --accent: #ffb347;
+  --accent-2: #c98524;
+  --surface-tint: rgba(255, 150, 40, 0.07);
+  --scanline-opacity: 0.1;
+}
+
+body[data-era='birth-pc'] {
+  --accent: #e8c46a;
+  --accent-2: #a58a4a;
+  --surface-tint: rgba(210, 180, 90, 0.08);
+  --scanline-opacity: 0.15;
+}
+
+body[data-era='multimedia'] {
+  --accent: #7fd67f;
+  --accent-2: #4a8a4a;
+  --surface-tint: rgba(80, 180, 80, 0.08);
+  --scanline-opacity: 0.18;
+}
+
+body[data-era='performance-race'] {
+  --accent: #6ab4f5;
+  --accent-2: #3a7ab0;
+  --surface-tint: rgba(60, 120, 200, 0.08);
+  --scanline-opacity: 0.1;
+}
+
+body[data-era='multicore'] {
+  --accent: #b48bf5;
+  --accent-2: #7a5ab0;
+  --surface-tint: rgba(120, 80, 180, 0.08);
+  --scanline-opacity: 0.08;
+}
+
+body[data-era='modern'] {
+  --accent: #4fd1c5;
+  --accent-2: #2a8a7f;
+  --surface-tint: rgba(40, 160, 150, 0.08);
+  --scanline-opacity: 0.05;
+}
+
+/* Subtle scanline overlay — used sparingly, disabled under reduced motion. */
+.scanline-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, var(--scanline-opacity)) 0px,
+    rgba(0, 0, 0, var(--scanline-opacity)) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanline-overlay {
+    display: none;
+  }
+}
