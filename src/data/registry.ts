@@ -51,6 +51,17 @@ import { STORAGE_MULTICORE } from './storage/multicore-era';
 import { MOTHERBOARDS_MULTICORE } from './motherboards/multicore-era';
 import { DISPLAYS_MULTICORE } from './displays/multicore-era';
 import { INTERFACES_MULTICORE } from './interfaces/multicore-era';
+import { CPUS_MODERN } from './cpu/modern-era';
+import { GRAPHICS_MODERN } from './graphics/modern-era';
+import { RAM_MODERN } from './ram/modern-era';
+import { STORAGE_MODERN } from './storage/modern-era';
+import { COMPUTERS_MODERN } from './computers/modern-era';
+import { MOTHERBOARDS_MODERN } from './motherboards/modern-era';
+import { NETWORK_MODERN } from './network/modern-era';
+import { WIFI_MODERN } from './wifi/modern-era';
+import { OS_MODERN } from './os/modern-era';
+import { DISPLAYS_MODERN } from './displays/modern-era';
+import { INTERFACES_MODERN } from './interfaces/modern-era';
 
 const ALL: HistoricalEvent[] = [
   ...COMPUTERS_FOUNDATIONS,
@@ -94,6 +105,17 @@ const ALL: HistoricalEvent[] = [
   ...MOTHERBOARDS_MULTICORE,
   ...DISPLAYS_MULTICORE,
   ...INTERFACES_MULTICORE,
+  ...CPUS_MODERN,
+  ...GRAPHICS_MODERN,
+  ...RAM_MODERN,
+  ...STORAGE_MODERN,
+  ...COMPUTERS_MODERN,
+  ...MOTHERBOARDS_MODERN,
+  ...NETWORK_MODERN,
+  ...WIFI_MODERN,
+  ...OS_MODERN,
+  ...DISPLAYS_MODERN,
+  ...INTERFACES_MODERN,
 ];
 
 /** Sorted by year ascending, then title. Stable for rendering. */

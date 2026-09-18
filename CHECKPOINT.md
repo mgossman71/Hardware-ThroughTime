@@ -1,14 +1,14 @@
 # Project Checkpoint
 
 ## Current Goal
-Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. Only the Modern era (2020–2026) remains unpopulated. **v0.6: timeline event nodes fully redesigned** (chip nodes on track spines, contrast-safe labels, dynamic canvas height, full state ladder).
+Build "Computer Hardware Through Time" — a polished, interactive educational React/TS website with parallel technology tracks, a core timeline engine, and strict source-based data architecture. **v0.2: Multimedia PC era (1985–1997) complete. v0.3: Performance Race era (1998–2009) complete. v0.4: Multi-Core era (2010–2019) complete. v0.5: Foundations era (1940–1969) complete** — 23 new events across 9 new data modules, all sourced. **v0.6: timeline event nodes fully redesigned** (chip nodes on track spines, contrast-safe labels, dynamic canvas height, full state ladder). **v0.7: Modern era (2020–2026) complete — all seven eras now populated.** 39 new events across all 11 tracks + 34 new sources; the final "empty era" test assertion flipped from `>= 1` to `0`.
 
 ## Current State
-- ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 16/16 pass.
+- ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 17/17 pass.
 - ✅ Timeline engine: `TimelineCanvas` (era bands, cluster compression, drag-to-scroll, focus-year indicator), `TrackToggles`, `EventList` (mobile fallback), `EventDetail`.
-- ✅ Data layer: `HistoricalEvent` type, `tracks.ts`, `sources.ts` (115 sources), `registry.ts` (121 events: 1970s–80s seed + full Foundations era (1940–1969) + full 1985–1997 Multimedia era + full 1998–2009 Performance Race era + full 2010–2019 Multi-Core era).
+- ✅ Data layer: `HistoricalEvent` type, `tracks.ts`, `sources.ts` (149 sources), `registry.ts` (160 events: 1970s–80s seed + full Foundations era (1940–1969) + full Multimedia era (1985–1997) + full Performance Race era (1998–2009) + full Multi-Core era (2010–2019) + full Modern era (2020–2026) — **all seven eras complete**).
 - ✅ Pages: `/`, `/typical-pc`, `/build-a-pc`, `/compare`, `/gallery` (placeholders), `/sources` (functional).
-- ✅ Data integrity tests: unique event/source ids, all `sourceIds` and `relatedEventIds` resolve, era cohort sizes for the Foundations, Multimedia, Performance Race, and Multi-Core eras.
+- ✅ Data integrity tests: unique event/source ids, all `sourceIds` and `relatedEventIds` resolve, era cohort sizes for the Foundations, Multimedia, Performance Race, Multi-Core, and Modern eras (Modern spans all 11 tracks; the "no empty era" assertion now expects 0 empty bands).
 - ✅ Cross-page state: `src/app/focusYear.ts` (useSyncExternalStore) — no circular imports.
 - ✅ Docs: `README.md`, `docs/research-sources.md`, `docs/decisions.md`, `CHECKPOINT.md`.
 - ✅ Deployment: `Dockerfile` (node:22-alpine → nginx:1.27-alpine), `docker-compose.yml` (prod :8081, dev :5174), `nginx.conf`.
@@ -72,6 +72,23 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
   - Deferred (optional follow-up): compact/expanded density toggle.
 - **Timeline legend fix (2026-09-18): sticky left gutter.** Track lane labels (`.tl-lane__label`) and era names (`.tl-canvas__era-label`) are now `position: sticky; left: 0` so the "which lane / which era" legend stays pinned at the left edge while the canvas scrolls (Option A — CSS-only, no JS/test changes). Gutter width token `--lane-gutter: 132px` on `.tl-canvas`; z-order era (6) > lane (5) > focus line (4) > events (3) > era bands (1). User-reported design flaw: lane legend scrolled out of view when moving to later years.
 - **Transparent gutter (2026-09-18):** per user request the gutter is transparent — era tint shows through. Legibility over events scrolling underneath is preserved with a background-colored text halo on both labels: `text-shadow: 0 0 2px/6px/14px var(--bg-1)`. The 1px `border-right` separator is kept.
+- **Modern era (2020–2026) content (2026-09-18, v0.7 — the final empty band) — 39 new events across 11 new data modules (one per track):**
+  - CPUs (`cpu/modern-era.ts`): Zen 3 (Ryzen 4000), Alder Lake (12th-gen), Zen 4 (Ryzen 7000), Apple M4, Snapdragon X Elite.
+  - Graphics (`graphics/modern-era.ts`): RTX 30 (Ampere), RTX 40 (Ada), Intel Arc, RDNA 3, RTX 50 (Blackwell).
+  - RAM (`ram/modern-era.ts`): HBM2E (A100), DDR5 mainstream, HBM3, HBM3E (H200).
+  - Storage (`storage/modern-era.ts`): PCIe 4.0 SSD mainstream, Samsung 990 Pro, Samsung 990 Pro 2 (PCIe 5.0).
+  - Computers (`computers/modern-era.ts`): Apple M1, Steam Deck, ASUS ROG Ally, Apple Vision Pro.
+  - Motherboards (`motherboards/modern-era.ts`): ATX 2.5, ATX 3.0 (12VHPWR), ATX 3.1 (12V-2x6).
+  - Networking (`network/modern-era.ts`): 2.5 Gigabit Ethernet, 10GBASE-T (consumer, 802.3bz).
+  - Wi-Fi (`wifi/modern-era.ts`): Wi-Fi 6E, Wi-Fi 7.
+  - OS (`os/modern-era.ts`): macOS Big Sur, Windows 11, Windows on ARM (Surface Pro 9 5G), Windows on ARM (Snapdragon X).
+  - Displays (`displays/modern-era.ts`): Mini-LED (MacBook Pro), OLED laptop wave, 4K OLED monitors.
+  - Interfaces (`interfaces/modern-era.ts`): Thunderbolt 4, USB4, DisplayPort 2.0, Thunderbolt 5.
+  - 34 new sources added to both `src/data/sources.ts` and `docs/research-sources.md` (kept in sync; DRAM backlog line updated to show DDR5 done).
+  - `eras.ts`: Modern `highlightEventIds` populated (18 ids).
+  - `App.test.tsx`: empty-era assertion flipped `>= 1` → `0` (all eras now populated); new Modern cohort test (≥30 events in 2020–2026 band + all 11 tracks present).
+  - Renamed the new 10GBASE-T source `wiki-10gbase-t` → `wiki-10gbase-t-bz` to avoid colliding with the pre-existing 802.3an `wiki-10gbase-t` (Multi-Core era).
+  - 17/17 tests passing; `tsc -b` / `eslint` / `vite build` (106 modules) all clean. Totals: 160 events, 149 sources. **All seven eras complete.**
 
 ## Architecture
 - Vanilla React 18 + Vite 5 + TS5; no frameworks, no state libs.
@@ -122,7 +139,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 ## Next Steps
 1. ~~Populate Performance Race era (1998–2009)~~ — **done (v0.3).**
 2. ~~Populate Multi-Core era (2010–2019)~~ — **done (v0.4).**
-3. ~~Populate Foundations era (1940–1969)~~ — **done (v0.5).** Populate Modern era (2020–2026) to remove the last empty band (only Modern remains empty now).
+3. ~~Populate Foundations era (1940–1969)~~ — **done (v0.5).** ~~Populate Modern era (2020–2026)~~ — **done (v0.7); all seven eras are now populated.**
 4. Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote.
 5. Begin Build-a-PC: era component pool data model (`EraComponent` type already exists), then interactive build UI.
 6. Begin era-comparison: `ComparePage` with honest-ratio callouts.
@@ -133,8 +150,8 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 ## Validation
 - `npx tsc --noEmit` → clean
 - `npm run lint` → clean
-- `npm run build` → success (95 modules; sources chunk carries 115 sources)
-- `npx vitest run` → 16 passed (2 files), incl. data-integrity suite + four era cohort tests (Foundations, Multimedia, Performance Race, Multi-Core)
+- `npm run build` → success (106 modules; sources chunk carries 149 sources)
+- `npx vitest run` → 17 passed (2 files), incl. data-integrity suite + five era cohort tests (Foundations, Multimedia, Performance Race, Multi-Core, Modern)
 - **Node redesign (v0.6):** `tsc -b` / `eslint` / `vitest` (16/16) / `vite build` all clean; Docker rebuilt; container-served TimelinePage bundle verified to contain the new node/gridline/`--track-accent` styles.
 - **Docker:** the user views the app at `http://10.0.0.86:8081/#/timeline`.
   After any content/UI change, run `docker compose up --build` so the new image is served.
@@ -152,6 +169,15 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
+2026-09-18 — v0.7: Modern era (2020–2026) fully populated — the last empty band. 39 new
+    events across 11 new data modules (one per track) + 34 new sources added to both
+    `src/data/sources.ts` and `docs/research-sources.md` (kept in sync; DRAM backlog line
+    updated to show DDR5 done). Modern `highlightEventIds` set (18 ids). `App.test.tsx`:
+    empty-era assertion flipped `>= 1` → `0` (all eras now populated); new Modern cohort test
+    (≥30 events in 2020–2026 band + all 11 tracks). New 10GBASE-T source renamed
+    `wiki-10gbase-t` → `wiki-10gbase-t-bz` to avoid colliding with the existing 802.3an source.
+    17/17 tests passing, tsc/eslint/build clean (106 modules). Totals: 160 events, 149 sources.
+    **All seven eras complete.**
 2026-09-18 — v0.6: timeline event nodes fully redesigned (user-approved Option A, "clean neutral chips").
     Fixed lane-clipping bug (static 620px canvas → dynamic height; the last 3 lanes were
     invisible with all tracks on). New chip nodes: solid --bg-3 surface, accent dot,

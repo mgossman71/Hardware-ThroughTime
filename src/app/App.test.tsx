@@ -75,9 +75,9 @@ describe('App shell + timeline', () => {
     const bands = container.querySelectorAll('.tl-canvas__era');
     expect(bands.length).toBe(7);
 
-    // Eras without content are flagged as such (only Modern remains empty now).
-    expect(container.querySelectorAll('.tl-canvas__era--empty').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText(/no entries yet/i).length).toBeGreaterThanOrEqual(1);
+    // All seven eras are now populated, so none should be flagged empty.
+    expect(container.querySelectorAll('.tl-canvas__era--empty').length).toBe(0);
+    expect(screen.queryAllByText(/no entries yet/i).length).toBe(0);
 
     // The "you are here" indicator exists and shows the initial focus year.
     const focus = container.querySelector<HTMLElement>('.tl-canvas__focus');
@@ -198,5 +198,27 @@ describe('data integrity', () => {
     expect(tracks.has('storage')).toBe(true);
     expect(tracks.has('interfaces')).toBe(true);
     expect(tracks.has('networking')).toBe(true);
+  });
+
+  it('has a solid cohort of Modern era events (2020–2026)', () => {
+    const inEra = ALL_EVENTS.filter((e) => e.year >= 2020 && e.year <= 2026);
+    expect(inEra.length).toBeGreaterThanOrEqual(30);
+    // Every in-era event carries at least one resolvable source.
+    for (const e of inEra) {
+      expect(e.sourceIds.length).toBeGreaterThan(0);
+    }
+    // The Modern era is the only era that spans all eleven tracks.
+    const tracks = new Set(inEra.map((e) => e.track));
+    expect(tracks.has('cpus')).toBe(true);
+    expect(tracks.has('graphics')).toBe(true);
+    expect(tracks.has('ram')).toBe(true);
+    expect(tracks.has('storage')).toBe(true);
+    expect(tracks.has('computers')).toBe(true);
+    expect(tracks.has('motherboards')).toBe(true);
+    expect(tracks.has('networking')).toBe(true);
+    expect(tracks.has('wifi')).toBe(true);
+    expect(tracks.has('os')).toBe(true);
+    expect(tracks.has('displays')).toBe(true);
+    expect(tracks.has('interfaces')).toBe(true);
   });
 });
