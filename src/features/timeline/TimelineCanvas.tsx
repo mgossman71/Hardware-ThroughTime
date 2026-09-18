@@ -35,14 +35,28 @@ export function TimelineCanvas({
 }: TimelineCanvasProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const years = events.map((e) => e.year);
-  const minYear = Math.min(...years) - 1;
-  const maxYear = Math.max(...years) + 1;
+  // The canvas spans the full era range (not just the seeded data), so every
+  // era chip has a visible band to focus and the indicator line is always
+  // reachable. Empty eras render as "no content yet" bands.
+  const minYear = Math.min(...ERAS.map((e) => e.startYear));
+  const maxYear = Math.max(...ERAS.map((e) => e.endYear));
   const width = (maxYear - minYear) * PX_PER_YEAR;
 
   const xFor = (year: number) => (year - minYear) * PX_PER_YEAR;
 
   const visibleTrackDefs = TRACKS.filter((t) => visibleTracks[t.id]);
+
+  // Which eras have at least one event (any track) — used to mark empty bands.
+  const eventsByEra = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const era of ERAS) {
+      counts.set(
+        era.id,
+        events.filter((e) => e.year >= era.startYear && e.year <= era.endYear).length,
+      );
+    }
+    return counts;
+  }, [events]);
 
   // Group events per lane and compress clusters so labels never overlap.
   const lanes = useMemo(() => {
@@ -129,17 +143,24 @@ export function TimelineCanvas({
       onPointerCancel={endDrag}
     >
       <div className="tl-canvas__inner" style={{ width }}>
-        {/* Era bands */}
-        {ERAS.filter((e) => e.endYear >= minYear && e.startYear <= maxYear).map((era) => {
+        {/* Era bands — full range, so every era chip has a visible target */}
+        {ERAS.map((era) => {
           const x = xFor(Math.max(era.startYear, minYear));
           const w = xFor(Math.min(era.endYear, maxYear)) - x;
           if (w <= 0) return null;
           const isFocused = focusYear >= era.startYear && focusYear <= era.endYear;
+          const isEmpty = (eventsByEra.get(era.id) ?? 0) === 0;
           return (
             <button
               key={era.id}
               type="button"
-              className={`tl-canvas__era${isFocused ? ' tl-canvas__era--focused' : ''}`}
+              className={[
+                'tl-canvas__era',
+                isFocused ? 'tl-canvas__era--focused' : '',
+                isEmpty ? 'tl-canvas__era--empty' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
               style={{
                 left: x,
                 width: w,
@@ -147,15 +168,25 @@ export function TimelineCanvas({
                 borderColor: era.theme.accent,
               }}
               onClick={() => onEraFocus(era)}
-              aria-label={`Focus era: ${era.name}, ${era.startYear}–${era.endYear}`}
+              aria-label={`Focus era: ${era.name}, ${era.startYear}–${era.endYear}${isEmpty ? ' (no entries yet)' : ''}`}
             >
               <span className="tl-canvas__era-label mono">{era.name}</span>
               <span className="tl-canvas__era-years mono">
                 {era.startYear}–{era.endYear}
               </span>
+              {isEmpty && <span className="tl-canvas__era-soon mono">no entries yet</span>}
             </button>
           );
         })}
+
+        {/* Focus indicator — the "you are here" line; moves with focusYear */}
+        <div
+          className="tl-canvas__focus"
+          style={{ left: xFor(Math.min(Math.max(focusYear, minYear), maxYear)) }}
+          aria-hidden="true"
+        >
+          <span className="tl-canvas__focus-year mono">{focusYear}</span>
+        </div>
 
         {/* Lanes */}
         <div className="tl-canvas__lanes">

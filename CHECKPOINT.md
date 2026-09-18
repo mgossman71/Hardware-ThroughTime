@@ -48,9 +48,19 @@ See `docs/decisions.md` (D-001…D-009). Highlights: data-as-content, strict sou
 ## Known Issues
 - Placeholders for typical-pc / build-a-pc / compare / gallery — intentional (content pending).
 - No visual regression tests. No CI yet.
+- (Fixed 2026-07-09) Timeline "focus column never moved": canvas was clipped to the seeded
+  data range (1970–1983) and had no focus indicator, so 5 of 7 era chips produced no visible
+  canvas change. Canvas now spans the full era range (1940–2026) with a moving focus indicator.
 
 ## Work In Progress
-- None (v0.1 milestone green).
+- None.
+
+## Completed (additional, 2026-07-09)
+- Timeline focus fix: canvas extent derived from `ERAS` (1940–2026); all 7 era bands render;
+  empty eras get a dimmed dashed "no entries yet" band; new vertical focus-year indicator line
+  (`.tl-canvas__focus`) moves with era chips/scrubber/event selection, `left` transition with
+  reduced-motion guard; scrubber range now 1940–2026 (consistent with eras); 2 new tests
+  (8/8 passing); Docker image rebuilt and verified serving the new chunk.
 
 ## Next Steps
 1. Research + populate 1990s CPUs (286/386/486, Pentium line, AMD K5→Athlon→Phenom) into `src/data/cpu/`, cross-check with primary sources, extend `docs/research-sources.md`.
@@ -69,6 +79,11 @@ See `docs/decisions.md` (D-001…D-009). Highlights: data-as-content, strict sou
 - `npx vitest run` → 6 passed (2 files)
 - **Docker compose** → `docker compose up --build` OK; container `hardware-throughtime-web-1` healthy on :8081;
   `/` 200, CSS/JS assets 200, deep route `/typical-pc` 200 (SPA fallback), lazy TimelinePage chunk 200.
+- **Timeline focus fix** (2026-07-09) → `npx vitest run` 8/8 passing (incl. "moves the focus indicator when
+  switching eras"); `npm run build` OK; Docker image rebuilt; served TimelinePage chunk confirmed to contain
+  `tl-canvas__focus` + "no entries yet".
+- **Note for future agents:** the user views the app via Docker at `http://10.0.0.86:8081/#/timeline`.
+  After any UI change, run `docker compose up --build` so the new image is served.
 
 ## Environment
 - Node 22 (Docker: node:22-alpine; nginx:1.27-alpine)
@@ -84,3 +99,5 @@ See `docs/decisions.md` (D-001…D-009). Highlights: data-as-content, strict sou
 2026-07-09 — v0.1 milestone complete: scaffold, timeline engine, seed data (1970s–80s), sources, tests, docs, Docker.
 2026-07-09 — docker compose stack built and verified healthy on :8081 (root, assets, SPA fallback, lazy chunks).
 2026-07-09 — public GitHub repo created (`mgossman71/Hardware-ThroughTime`) and all commits pushed; README made public-facing.
+2026-07-09 — Fixed "focus column never moves" on timeline: full-era-range canvas (1940–2026), moving focus-year
+   indicator line, empty-era "no entries yet" bands, consistent scrubber range; 8/8 tests; Docker rebuilt + verified.

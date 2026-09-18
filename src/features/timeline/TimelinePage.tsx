@@ -17,8 +17,8 @@ const ALL_TRACKS_ON = Object.fromEntries(TRACKS.map((t) => [t.id, true])) as Rec
   boolean
 >;
 
-const MIN_YEAR = 1970;
-const MAX_YEAR = Math.max(2026, ...ALL_EVENTS.map((e) => e.year));
+const MIN_YEAR = Math.min(...ERAS.map((e) => e.startYear));
+const MAX_YEAR = Math.max(ERAS[ERAS.length - 1].endYear, ...ALL_EVENTS.map((e) => e.year));
 
 export default function TimelinePage() {
   const [visibleTracks, setVisibleTracks] = useState<Record<TrackId, boolean>>(ALL_TRACKS_ON);

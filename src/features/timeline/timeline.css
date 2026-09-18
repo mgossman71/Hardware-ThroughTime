@@ -220,6 +220,22 @@
   border-left-color: var(--accent);
   border-right-color: var(--accent);
 }
+/* Eras with no content yet — dimmed, dashed, honest "coming soon" state. */
+.tl-canvas__era--empty {
+  border-left-style: dashed;
+  border-right-style: dashed;
+  opacity: 0.55;
+}
+.tl-canvas__era--empty.tl-canvas__era--focused {
+  opacity: 1;
+}
+.tl-canvas__era-soon {
+  margin-top: 4px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
 .tl-canvas__era-label {
   font-size: var(--text-xs);
   letter-spacing: 0.12em;
@@ -301,6 +317,51 @@
 .tl-event--selected .tl-event__dot {
   transform: scale(1.4);
   box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 40%, transparent);
+}
+
+/* --- Focus indicator ("you are here" line) ----------------------- */
+
+.tl-canvas__focus {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 55%, transparent);
+  z-index: 4;
+  pointer-events: none;
+  transition: left var(--dur-slow, 400ms) var(--ease-out);
+}
+.tl-canvas__focus::after {
+  content: '';
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+.tl-canvas__focus-year {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  background: var(--accent);
+  color: var(--bg-0);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-canvas__focus {
+    transition: none;
+  }
 }
 
 /* --- Year axis ---------------------------------------------------- */
