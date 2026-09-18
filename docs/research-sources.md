@@ -1362,6 +1362,41 @@ least one entry here via its `sourceIds`.
   - USB-C, PCIe Gen 4 tunneling
   - DisplayPort 2.1
 
+### wiki-zen-6 — Zen 6
+- **Publisher:** Wikipedia (citing AMD / Tom's Hardware)
+- **URL:** https://en.wikipedia.org/wiki/Zen_6
+- **Facts used:**
+  - AMD Zen 6, successor to Zen 5; TSMC N2P (CCD) / N6 (IOD)
+  - Datacenter (Epyc "Venice", up to 256 cores) shipping Q4 2026
+  - Desktop (Ryzen 10000) expected H1 2027 (AMD roadmap)
+  - Up to 1024 MB L3, 16-channel memory, 5 GHz+ clocks
+
+### wiki-panther-lake — Panther Lake (microprocessor)
+- **Publisher:** Wikipedia (citing Intel)
+- **URL:** https://en.wikipedia.org/wiki/Panther_Lake_(microprocessor)
+- **Facts used:**
+  - Intel Core Ultra Series 3, released 2026, on the Intel 18A process
+  - Cougar Cove P-cores, Darkmont E-cores, NPU 5 (up to 50 TOPS)
+  - Xe3-LPG GPU (12 Xe-cores), LPDDR5X-9600 / DDR5-7200, PCIe 5.0
+  - Successor "Nova Lake" on Intel 18A and/or TSMC N2P (Coyote Cove)
+
+### wiki-ddr6 — DDR6 SDRAM
+- **Publisher:** Wikipedia (citing JEDEC / TechPowerUp / SK hynix)
+- **URL:** https://en.wikipedia.org/wiki/DDR6
+- **Facts used:**
+  - DDR6, successor to DDR5 (JEDEC), scheduled 2027–2029
+  - 8,800–17,600 MT/s, up to 134.4 GB/s, four 24-bit channels
+  - CAMM2 form factor, Decision Feedback Equalization, optional 3D DRAM
+
+### wiki-wifi-8 — Wi-Fi 8
+- **Publisher:** Wikipedia (citing IEEE 802.11bn / Wi-Fi Alliance)
+- **URL:** https://en.wikipedia.org/wiki/Wi-Fi_8
+- **Facts used:**
+  - Wi-Fi 8 = IEEE 802.11bn "Ultra High Reliability (UHR)"
+  - Focus on reliability and low latency rather than raw data rate
+  - Standard projected to be finalized May 2028; products ~2028–2029
+  - Multi-AP coordination, seamless roaming, distributed-tone RUs, AI offload
+
 ## Sources still needed (research backlog)
 
 - [x] Pentium III / Pentium 4 (Intel) — `wiki-pentium-3`, `wiki-pentium-4`

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ERAS } from '../../data/eras';
 import type { Era, HistoricalEvent, Projection, TrackId } from '../../types/historical-event';
 import { TRACKS } from '../../data/tracks';
+import { placeItems } from './layout';
 
 const PX_PER_YEAR = 80;
 const LANE_HEIGHT = 64;
@@ -23,6 +24,8 @@ interface TimelineCanvasProps {
   /** Focus the projection band (wired to the "Projections" chip / band label). */
   onProjectionFocus: () => void;
   focusYear: number;
+  /** 'smooth' for selection jumps; 'auto' while the user is scrubbing. */
+  scrollBehavior?: 'auto' | 'smooth';
 }
 
 /**
@@ -32,7 +35,8 @@ interface TimelineCanvasProps {
  *  - container is horizontally scrollable (mouse drag, touch, keyboard)
  *  - era bands are colored regions behind the lanes
  *  - events are absolutely-positioned buttons; close events are compressed
- *    into even 90px columns so labels never overlap
+ *    into even columns (MIN_CLUSTER_SPACING, via layout.ts) so labels never
+ *    overlap, and a cluster is shifted back if it would run past the canvas edge
  */
 export function TimelineCanvas({
   events,
@@ -44,6 +48,7 @@ export function TimelineCanvas({
   onEraFocus,
   onProjectionFocus,
   focusYear,
+  scrollBehavior = 'smooth',
 }: TimelineCanvasProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -85,49 +90,42 @@ export function TimelineCanvas({
     return counts;
   }, [events]);
 
-  // Group events per lane and compress clusters so labels never overlap.
+  // Group events AND projections per lane and compress clusters so labels
+  // never overlap (see layout.ts). Projections get the same treatment, so
+  // two same-year projections (e.g. two 2027 CPUs) no longer stack exactly.
   const lanes = useMemo(() => {
     return visibleTrackDefs.map((def) => {
       const laneEvents = events
         .filter((e) => e.track === def.id)
         .sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
+      const placed = placeItems(laneEvents, xFor, MIN_CLUSTER_SPACING, width).map(
+        (p) => ({ event: p.item, x: p.x }),
+      );
 
-      type Placed = { event: HistoricalEvent; x: number };
-      const placed: Placed[] = [];
-      let clusterStart = -1;
-      let clusterLastX = -Infinity;
-      let clusterCount = 0;
+      const laneProjections = projections
+        .filter((p) => p.track === def.id)
+        .sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
+      const placedProjections = placeItems(laneProjections, xFor, MIN_CLUSTER_SPACING, width).map(
+        (p) => ({ projection: p.item, x: p.x }),
+      );
 
-      for (const event of laneEvents) {
-        const naturalX = xFor(event.year);
-        if (clusterStart < 0 || naturalX - clusterLastX >= MIN_CLUSTER_SPACING) {
-          clusterStart = naturalX;
-          clusterLastX = naturalX;
-          clusterCount = 1;
-          placed.push({ event, x: naturalX });
-        } else {
-          const x = clusterStart + clusterCount * MIN_CLUSTER_SPACING;
-          clusterLastX = x;
-          clusterCount += 1;
-          placed.push({ event, x });
-        }
-      }
-      return { def, placed };
+      return { def, placed, placedProjections };
     });
-  }, [events, visibleTracks, minYear]);
+  }, [events, projections, visibleTracks, minYear, width]);
 
-  // Scroll to focus year when it changes.
+  // Scroll to focus year when it changes. 'auto' while scrubbing (each slider
+  // step should not queue a competing smooth scroll); 'smooth' for selections.
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const target = Math.max(0, xFor(focusYear) - el.clientWidth / 2);
     if (typeof el.scrollTo === 'function') {
-      el.scrollTo({ left: target, behavior: 'smooth' });
+      el.scrollTo({ left: target, behavior: scrollBehavior });
     } else {
       // Fallback for environments without Element.scrollTo (e.g. older engines, jsdom).
       el.scrollLeft = target;
     }
-  }, [focusYear]);
+  }, [focusYear, scrollBehavior]);
 
   const [dragging, setDragging] = useState(false);
   const dragState = useRef({ startX: 0, startScroll: 0 });
@@ -258,12 +256,7 @@ export function TimelineCanvas({
 
         {/* Lanes */}
         <div className="tl-canvas__lanes">
-          {lanes.map(({ def, placed }) => {
-            const trackProjections = hasProjections
-              ? projections
-                  .filter((p) => p.track === def.id)
-                  .sort((a, b) => a.year - b.year || a.title.localeCompare(b.title))
-              : [];
+          {lanes.map(({ def, placed, placedProjections }) => {
             return (
               <div
                 key={def.id}
@@ -288,14 +281,14 @@ export function TimelineCanvas({
                     </button>
                   );
                 })}
-                {trackProjections.map((proj) => {
+                {placedProjections.map(({ projection: proj, x }) => {
                   const isSelected = proj.id === selectedId;
                   return (
                     <button
                       key={proj.id}
                       type="button"
                       className={`tl-event tl-event--projection${isSelected ? ' tl-event--selected' : ''}`}
-                      style={{ left: xFor(proj.year), top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
+                      style={{ left: x, top: LANE_HEIGHT / 2, '--track-accent': def.accent } as React.CSSProperties}
                       onClick={() => onSelectProjection(proj)}
                       aria-pressed={isSelected}
                       title={`${proj.title} (~${proj.year}, projection)`}

@@ -45,3 +45,11 @@ build` for the rest. No visual regression yet.
 ## D-009 — Inflation basis
 All "today equivalent" prices use BLS CPI, stated explicitly in the UI
 footnote.
+
+## D-010 — Projection years are themed as the Modern era
+`eraForYear` clamps any year past 2026 to the Modern era (the last
+historical era). Selecting a projection therefore does **not** change the
+site-wide theme; the "beyond-history" identity is carried by the projections
+band, its chip, the "present" divider, and the dashed nodes instead.
+Deliberate: there is no "future" era theme, and inventing one would blur the
+same line the data layer keeps (projections never enter `ALL_EVENTS`).

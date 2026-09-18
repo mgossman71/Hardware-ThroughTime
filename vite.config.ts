@@ -12,7 +12,9 @@ export default defineConfig({
     css: false,
   },
   build: {
-    // Split React + app into stable vendor chunks.
+    // Headroom before Vite warns about chunk size (the data-heavy timeline
+    // page is the big one). No manualChunks yet — add one if a chunk grows
+    // past this limit.
     chunkSizeWarningLimit: 600,
   },
 });

@@ -8,6 +8,12 @@
  */
 export const FOCUS_YEAR_EVENT = 'hardware-timeline-focus-year';
 
+/**
+ * The year the timeline (and the site-wide era theme) starts at.
+ * Single source of truth so App and TimelinePage can't drift apart.
+ */
+export const DEFAULT_FOCUS_YEAR = 1981;
+
 export function emitFocusYear(year: number) {
   window.dispatchEvent(new CustomEvent(FOCUS_YEAR_EVENT, { detail: year }));
 }

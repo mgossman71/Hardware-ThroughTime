@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { PageShell } from '../../components/PageShell';
-import { emitFocusYear, onFocusYear } from '../../app/focusYear';
+import { DEFAULT_FOCUS_YEAR, emitFocusYear, onFocusYear } from '../../app/focusYear';
 import { TrackToggles } from './TrackToggles';
 import { TimelineCanvas } from './TimelineCanvas';
 import { EventList } from './EventList';
@@ -10,6 +10,7 @@ import { ALL_EVENTS } from '../../data/registry';
 import { PROJECTIONS } from '../../data/projections';
 import { ERAS } from '../../data/eras';
 import type { Era, HistoricalEvent, Projection, TrackId } from '../../types/historical-event';
+import { isProjection } from '../../types/historical-event';
 import { TRACKS } from '../../data/tracks';
 import './timeline.css';
 import './timeline-list.css';
@@ -35,7 +36,9 @@ export default function TimelinePage() {
   const [visibleTracks, setVisibleTracks] = useState<Record<TrackId, boolean>>(ALL_TRACKS_ON);
   const [selected, setSelected] = useState<Selection | null>(null);
   const [showProjections, setShowProjections] = useState(true);
-  const [focusYear, setFocusYear] = useState<number>(1981);
+  const [focusYear, setFocusYear] = useState<number>(DEFAULT_FOCUS_YEAR);
+  // 'smooth' for selection jumps; 'auto' while scrubbing (see TimelineCanvas).
+  const [smoothScroll, setSmoothScroll] = useState(true);
 
   // Listen for focus-year events from other pages/features.
   useEffect(() => onFocusYear(setFocusYear), []);
@@ -46,29 +49,33 @@ export default function TimelinePage() {
 
   const handleSelectEvent = useCallback((event: HistoricalEvent) => {
     setSelected({ type: 'event', event });
+    setSmoothScroll(true);
     setFocusYear(event.year);
     emitFocusYear(event.year);
   }, []);
 
   const handleSelectProjection = useCallback((projection: Projection) => {
     setSelected({ type: 'projection', projection });
+    setSmoothScroll(true);
     setFocusYear(projection.year);
     emitFocusYear(projection.year);
   }, []);
 
   // Related links can point at a real event OR another projection.
   const handleSelectRelated = useCallback((item: HistoricalEvent | Projection) => {
-    if ('confidence' in item) {
+    if (isProjection(item)) {
       setSelected({ type: 'projection', projection: item });
     } else {
       setSelected({ type: 'event', event: item });
     }
+    setSmoothScroll(true);
     setFocusYear(item.year);
     emitFocusYear(item.year);
   }, []);
 
   const handleEraFocus = useCallback((era: Era) => {
     const mid = Math.round((era.startYear + era.endYear) / 2);
+    setSmoothScroll(true);
     setFocusYear(mid);
     emitFocusYear(mid);
   }, []);
@@ -77,11 +84,13 @@ export default function TimelinePage() {
     const first = PROJECTIONS[0];
     const year = first ? first.year : 2027;
     setShowProjections(true);
+    setSmoothScroll(true);
     setFocusYear(year);
     emitFocusYear(year);
   }, []);
 
   const handleScrub = useCallback((year: number) => {
+    setSmoothScroll(false);
     setFocusYear(year);
     emitFocusYear(year);
   }, []);
@@ -192,6 +201,7 @@ export default function TimelinePage() {
               onEraFocus={handleEraFocus}
               onProjectionFocus={handleProjectionFocus}
               focusYear={focusYear}
+              scrollBehavior={smoothScroll ? 'smooth' : 'auto'}
             />
             <EventList
               events={ALL_EVENTS}

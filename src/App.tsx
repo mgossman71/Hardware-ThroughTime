@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { ROUTES, parseRoute } from './app/routes';
 import { eraForYear } from './data/eras';
-import { onFocusYear } from './app/focusYear';
+import { DEFAULT_FOCUS_YEAR, onFocusYear } from './app/focusYear';
 import { SiteHeader } from './components/SiteHeader';
 import './styles/app.css';
 
@@ -24,7 +24,7 @@ const PAGE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentT
 
 export function App() {
   const [route, setRoute] = useState<string>(() => parseRoute(window.location.hash));
-  const [focusYear, setFocusYear] = useState<number>(1995);
+  const [focusYear, setFocusYear] = useState<number>(DEFAULT_FOCUS_YEAR);
 
   useEffect(() => {
     const onHashChange = () => setRoute(parseRoute(window.location.hash));

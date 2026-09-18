@@ -111,6 +111,15 @@ export interface Projection {
 }
 
 /**
+ * Type guard: `Projection` requires `confidence` and `basis`, neither of
+ * which can exist on a `HistoricalEvent`. Use this instead of ad-hoc
+ * `'confidence' in x` checks.
+ */
+export function isProjection(item: HistoricalEvent | Projection): item is Projection {
+  return 'confidence' in item && 'basis' in item;
+}
+
+/**
  * An image that can be attached to an event. Only include images with a
  * verifiable license/attribution. Prefer:
  *  - manufacturer press images with reuse rights,
