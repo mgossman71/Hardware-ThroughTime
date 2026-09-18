@@ -1,15 +1,12 @@
-import { PageShell } from '../../components/PageShell';
+import { UnderConstruction } from '../../components/UnderConstruction';
 
 export default function GalleryPage() {
   return (
-    <PageShell
+    <UnderConstruction
       kicker="05 — HARDWARE GALLERY"
       title="Historical Hardware Exhibits"
       lede="Key machines and components, with real photographs (clearly attributed), specifications, significance, and links to related events. Illustrations are always labeled as such."
-    >
-      <p className="mono" style={{ color: 'var(--text-2)' }}>
-        // under construction — exhibits with licensed photography are being assembled next.
-      </p>
-    </PageShell>
+      progressNote="exhibits with licensed photography are being assembled next."
+    />
   );
 }

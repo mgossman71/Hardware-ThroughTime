@@ -185,6 +185,8 @@
     linear-gradient(to right, var(--surface-tint), transparent 30%),
     var(--bg-1);
   cursor: grab;
+  /* Let the browser own horizontal touch panning; pointer-drag covers mouse. */
+  touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   /* Frozen left column: track + era names stay pinned here while the canvas scrolls. */

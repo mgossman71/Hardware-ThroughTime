@@ -1,4 +1,5 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { readFileSync } from 'node:fs';
 import { App } from '../App';
 import { ALL_EVENTS } from '../data/registry';
 import { SOURCES } from '../data/sources';
@@ -261,5 +262,24 @@ describe('data integrity', () => {
     expect(container.querySelector('.tl-proj-zone')).not.toBeNull();
     expect(container.querySelector('.tl-proj-divider')).not.toBeNull();
     expect(container.querySelectorAll('.tl-event--projection').length).toBeGreaterThan(0);
+  });
+
+  it('every exactDate is ISO-ish (YYYY, YYYY-MM, or YYYY-MM-DD)', () => {
+    for (const e of ALL_EVENTS) {
+      if (e.exactDate !== undefined) {
+        expect(e.exactDate).toMatch(/^\d{4}(-\d{2}){0,2}$/);
+      }
+    }
+  });
+
+  it('docs/research-sources.md mirrors every source id in sources.ts (and no extras)', () => {
+    // vitest runs with the repo root as cwd (see the `npm test` script).
+    const md = readFileSync('docs/research-sources.md', 'utf8');
+    const mdIds = new Set([...md.matchAll(/^### (\S+) /gm)].map((m) => m[1]));
+    for (const s of SOURCES) {
+      expect(mdIds.has(s.id)).toBe(true);
+    }
+    // No orphan headings in the doc that sources.ts doesn't define.
+    expect(mdIds.size).toBe(SOURCES.length);
   });
 });

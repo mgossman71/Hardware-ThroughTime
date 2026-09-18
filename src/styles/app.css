@@ -157,3 +157,10 @@
     display: none;
   }
 }
+
+/* --- Placeholder ("under construction") pages ----------------- */
+
+.under-construction__note {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}

@@ -40,7 +40,7 @@ export function EventList({
   }));
 
   return (
-    <div className="event-list" role="list">
+    <div className="event-list">
       {groups
         .filter((g) => g.events.length > 0)
         .map(({ track, events: trackEvents }) => (
