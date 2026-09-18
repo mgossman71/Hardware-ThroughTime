@@ -77,7 +77,10 @@ See `docs/decisions.md` (D-001…D-009). Highlights: data-as-content, strict sou
   invoke as `/Applications/Docker.app/Contents/Resources/bin/docker` (start with
   `open -a Docker` if the daemon is down).
 - Current state: `docker compose up` running, web container healthy on :8081.
+- **Remote:** public GitHub repo `https://github.com/mgossman71/Hardware-ThroughTime`
+  (owner `mgossman71`, default branch `master`), configured as `origin` and pushed.
 
 ## Last Updated
 2026-07-09 — v0.1 milestone complete: scaffold, timeline engine, seed data (1970s–80s), sources, tests, docs, Docker.
 2026-07-09 — docker compose stack built and verified healthy on :8081 (root, assets, SPA fallback, lazy chunks).
+2026-07-09 — public GitHub repo created (`mgossman71/Hardware-ThroughTime`) and all commits pushed; README made public-facing.
