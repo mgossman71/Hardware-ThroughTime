@@ -36,6 +36,11 @@ docker compose up --build          # production build + nginx → http://localho
 docker compose --profile dev up   # Vite dev hot-reload          → http://localhost:5174
 ```
 
+> If `docker` is not found on macOS with Docker Desktop: start it with
+> `open -a Docker` and use
+> `/Applications/Docker.app/Contents/Resources/bin/docker`, or add that
+> directory to your PATH.
+
 ## Architecture
 
 ```

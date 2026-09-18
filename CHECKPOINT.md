@@ -67,12 +67,17 @@ See `docs/decisions.md` (D-001…D-009). Highlights: data-as-content, strict sou
 - `npm run lint` → clean
 - `npm run build` → success (57 modules; index 150.99 kB / TimelinePage 25.21 kB)
 - `npx vitest run` → 6 passed (2 files)
-- `vite preview` on :4173 → `curl /` 200, HTML + assets 200
+- **Docker compose** → `docker compose up --build` OK; container `hardware-throughtime-web-1` healthy on :8081;
+  `/` 200, CSS/JS assets 200, deep route `/typical-pc` 200 (SPA fallback), lazy TimelinePage chunk 200.
 
 ## Environment
 - Node 22 (Docker: node:22-alpine; nginx:1.27-alpine)
 - Dev: `npm run dev` → :5173 (Vite); Docker dev profile → :5174; prod Docker → :8081
-- Ports in use for local testing: 4173 (vite preview, stop after use)
+- Docker Desktop is installed at `/Applications/Docker.app`; the CLI is **not on PATH** —
+  invoke as `/Applications/Docker.app/Contents/Resources/bin/docker` (start with
+  `open -a Docker` if the daemon is down).
+- Current state: `docker compose up` running, web container healthy on :8081.
 
 ## Last Updated
 2026-07-09 — v0.1 milestone complete: scaffold, timeline engine, seed data (1970s–80s), sources, tests, docs, Docker.
+2026-07-09 — docker compose stack built and verified healthy on :8081 (root, assets, SPA fallback, lazy chunks).
