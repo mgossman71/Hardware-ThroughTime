@@ -142,6 +142,31 @@ export const EARLY_CPUS: HistoricalEvent[] = [
     relatedEventIds: ['intel-8088', 'intel-80286'],
   },
   {
+    id: 'intel-80286',
+    year: 1982,
+    exactDate: '1982-10-01',
+    track: 'cpus',
+    title: 'Intel 80286',
+    summary:
+      'The 16-bit microprocessor that added protected mode and 24-bit addressing — the stepping stone between the 8088 and the 32-bit 80386.',
+    detailedDescription:
+      'The 80286 (October 1982) was Intel’s first 16-bit microprocessor with protected-mode operation: hardware memory segmentation, ring-based privilege levels, and a 24-bit address bus (16 MB). It ran at 6, 8, and 10 MHz and had ~13,000 transistors at 3 µm. Its protected mode was the foundation that Windows/OS 2 later used, and it was the CPU in the IBM PC/AT — the machine that defined the 16-bit PC standard. It was also the first x86 with a hardware FPU option (80287) and the chip that moved the PC from 1 MB to 16 MB of addressable memory.',
+    manufacturer: 'Intel',
+    specs: {
+      transistors: 13000,
+      clockMhz: 10,
+      clockRange: '6 / 8 / 10 MHz',
+      dataWidth: '16-bit',
+      addressWidth: '24-bit (16 MB)',
+      processNode: '3 µm',
+      features: 'Protected mode (segments, rings)',
+    },
+    significance:
+      'The 80286 is the hinge between the 8-bit/16-bit hobbyist PC and the 32-bit era: its protected mode is what Windows/OS 2 and later Windows NT were built on, and it is the CPU in the IBM PC/AT — the machine that made “PC” a durable standard. It is the direct predecessor of the 80386.',
+    sourceIds: ['wiki-intel-80286'],
+    relatedEventIds: ['intel-8088', 'intel-80386'],
+  },
+  {
     id: 'intel-8088',
     year: 1979,
     track: 'cpus',
