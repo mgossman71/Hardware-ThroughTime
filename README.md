@@ -1,12 +1,31 @@
 # Computer Hardware Through Time
 
-An interactive educational website exploring the evolution of computer
-hardware — from early CPUs (1971) to modern enthusiast systems.
+> **An interactive museum of personal-computer hardware — from the Intel 4004
+> (1971) to modern enthusiast desktops.**
+
+Explore computer hardware the way a historian would: **parallel tracks, not a
+single narrative**. See what CPUs, GPUs, memory, storage, networking, and
+operating systems existed in each era — what a real consumer PC actually
+contained that year — and how each generation changed what people could do,
+with every claim traceable to a cited source.
 
 > **Content status (v0.1):** the timeline engine and data architecture are
 > complete, with verified 1970s–1980s CPU and computer content. Typical-PC,
 > Build-a-PC, era comparison, and gallery pages are placeholders awaiting
 > researched content. Every historical fact traces to `docs/research-sources.md`.
+
+## Why it's different
+
+- **Parallel tracks.** CPUs, graphics, memory, storage, networking, and OSes
+  evolved on independent timelines — the site keeps them in separate lanes
+  instead of pretending there was one "best" component per year.
+- **No invented history.** Every spec, price, and date on the site references
+  a source in `docs/research-sources.md`. Unknowns are left blank; conflicts
+  are flagged, not silently resolved.
+- **Period-correct builds.** Choose to assemble a PC only from parts that
+  were actually on sale in that era.
+- **Then vs. now, honestly.** Comparisons include the context that makes raw
+  ratios meaningful (or misleading).
 
 ## Pages
 
@@ -19,14 +38,22 @@ hardware — from early CPUs (1971) to modern enthusiast systems.
 | `/gallery` | Hardware exhibits (licensed photos) | 🚧 |
 | `/sources` | References | ✅ |
 
+## Quickstart
+
+```bash
+git clone https://github.com/mgossman71/Hardware-ThroughTime.git
+cd Hardware-ThroughTime
+npm install
+npm run dev        # → http://localhost:5173
+```
+
 ## Development
 
 ```bash
-npm install
-npm run dev       # Vite dev server (http://localhost:5173)
-npm test          # vitest
-npm run lint      # eslint
-npm run build     # tsc -b && vite build
+npm run dev        # Vite dev server (http://localhost:5173)
+npm test           # vitest
+npm run lint       # eslint
+npm run build      # tsc -b && vite build
 ```
 
 ### Docker
