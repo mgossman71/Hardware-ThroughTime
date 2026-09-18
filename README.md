@@ -42,19 +42,21 @@ docker compose --profile dev up   # Vite dev hot-reload          → http://loca
 src/
 ├─ App.tsx                 # shell: header + lazy-loaded pages
 ├─ app/
-│  ├─ app.css              # tokens + global styles
+│  ├─ routes.ts            # route table + parser
 │  └─ focusYear.ts         # tiny cross-page store (useSyncExternalStore)
-├─ components/             # shared UI (PageShell)
+├─ components/             # shared UI (PageShell, SiteHeader)
 ├─ data/                   # ⚠ content lives here, not in components
 │  ├─ registry.ts          # aggregates all HistoricalEvents
 │  ├─ tracks.ts            # track ids, colors, order
+│  ├─ eras.ts              # era bands
 │  ├─ sources.ts           # source of record for every fact
-│  ├─ types/historical-event.ts
 │  ├─ cpu/early.ts         # 1970s–80s CPUs (seeded)
 │  └─ computers/*.ts       # 1970s–80s computers (seeded)
 ├─ features/
 │  ├─ timeline/            # TimelineCanvas, TrackToggles, EventList, EventDetail
 │  ├─ typical-pc/  build-a-pc/  era-comparison/  gallery/  sources/
+├─ styles/                 # tokens, base, app, era themes
+├─ types/historical-event.ts
 └─ utils/format.ts
 ```
 

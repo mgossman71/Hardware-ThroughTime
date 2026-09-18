@@ -25,16 +25,19 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
 - Vanilla React 18 + Vite 5 + TS5; no frameworks, no state libs.
 - `src/data/**` is the single source of truth for content; `registry.ts` aggregates.
 - Each top-level page is `React.lazy` → separate chunk.
-- Plain CSS with custom properties (design tokens), BEM-ish, no CSS-in-JS.
-- Shared: `PageShell`, `formatSpecValue`/`specLabel`, `useSyncExternalStore`-based `focusYear` store.
+- Plain CSS with custom properties (design tokens in `src/styles/tokens.css`), BEM-ish, no CSS-in-JS.
+- Shared: `PageShell`, `SiteHeader`, `formatSpecValue`/`specLabel`, `useSyncExternalStore`-based `focusYear` store.
+- Routes: `src/app/routes.ts`; eras: `src/data/eras.ts`; types: `src/types/historical-event.ts`.
 
 ## Important Files
-- `src/App.tsx` — shell + routes.
+- `src/App.tsx` — shell + lazy routes.
+- `src/app/routes.ts` — route table + parser.
 - `src/app/focusYear.ts` — cross-page store.
-- `src/data/registry.ts`, `src/data/sources.ts`, `src/data/tracks.ts` — data core.
+- `src/data/registry.ts`, `src/data/sources.ts`, `src/data/tracks.ts`, `src/data/eras.ts` — data core.
 - `src/features/timeline/*` — canvas, toggles, list, detail, CSS.
 - `src/features/sources/SourcesPage.tsx` — references page.
 - `src/utils/format.ts` — label/value helpers.
+- `src/styles/*.css` — tokens, base, app, era themes.
 - `Dockerfile`, `docker-compose.yml`, `nginx.conf` — deployment.
 - `docs/research-sources.md` — human twin of `sources.ts` (keep in sync).
 - `docs/decisions.md` — why.
