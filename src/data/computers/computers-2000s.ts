@@ -26,6 +26,16 @@ export const COMPUTERS_2000S: HistoricalEvent[] = [
     },
     significance:
       'The Power Mac G5 is the “performance tower” icon of the early-2000s era and Apple’s answer to the Intel/AMD performance race. Its integrated memory controller and 64-bit capability anticipated the industry’s 64-bit pivot (led by AMD’s Athlon 64), and it was the last great PowerPC desktop before Apple’s 2006 switch to Intel Core.',
+    images: [
+      {
+        url: '/images/gallery/power-mac-g5.jpg',
+        alt: 'A Power Mac G5 1.8 dual, seen from the front',
+        attribution: 'Grm wnr, via Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Power_Mac_G5_front.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-power-mac-g5'],
     relatedEventIds: ['power-mac-6100', 'amd-athlon-64', 'windows-xp'],
   },

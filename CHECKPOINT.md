@@ -7,7 +7,7 @@ Build "Computer Hardware Through Time" — a polished, interactive educational R
 - ✅ Project scaffolds and builds: `tsc` clean, `eslint` clean, `vite build` clean, `vitest` 17/17 pass.
 - ✅ Timeline engine: `TimelineCanvas` (era bands, cluster compression, drag-to-scroll, focus-year indicator), `TrackToggles`, `EventList` (mobile fallback), `EventDetail`.
 - ✅ Data layer: `HistoricalEvent` type, `tracks.ts`, `sources.ts` (149 sources), `registry.ts` (160 events: 1970s–80s seed + full Foundations era (1940–1969) + full Multimedia era (1985–1997) + full Performance Race era (1998–2009) + full Multi-Core era (2010–2019) + full Modern era (2020–2026) — **all seven eras complete**).
-- ✅ Pages: `/`, `/typical-pc` (functional — 24 milestone years 1977–2026), `/build-a-pc`, `/compare`, `/gallery` (placeholders), `/sources` (functional).
+- ✅ Pages: `/`, `/typical-pc` (functional — 24 milestone years 1977–2026), `/build-a-pc`, `/compare` (placeholders), `/gallery` (functional — 13 exhibits 1945–2022, self-hosted licensed imagery), `/sources` (functional).
 - ✅ Data integrity tests: unique event/source ids, all `sourceIds` and `relatedEventIds` resolve, era cohort sizes for the Foundations, Multimedia, Performance Race, Multi-Core, and Modern eras (Modern spans all 11 tracks; the "no empty era" assertion now expects 0 empty bands).
 - ✅ Projections (2027+): `src/data/projections.ts` (8 cited, confidence-rated), `ProjectionDetail.tsx` panel, canvas "future" band (`.tl-proj-zone` / `.tl-proj-divider` / `.tl-proj-label` + `.tl-event--projection` nodes), a "Projections" era chip + show/hide toggle in `TimelinePage`, and a "Projections (2027+)" section in the mobile `EventList`. Kept OUT of `ALL_EVENTS`.
 - ✅ Cross-page state: `src/app/focusYear.ts` (useSyncExternalStore) — no circular imports.
@@ -145,7 +145,7 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
 5. ~~Begin Typical-PC page: year list + per-year configuration cards + "based on" machines + CPI footnote~~ — **done (v0.9).**
 6. Begin Build-a-PC: era component pool data model (`EraComponent` type already exists), then interactive build UI.
 7. Begin era-comparison: `ComparePage` with honest-ratio callouts.
-8. Add gallery with licensed/attributed photography (label illustration vs. photo per spec).
+8. ~~Add gallery with licensed/attributed photography (label illustration vs. photo per spec)~~ — **done (v1.0).** 13 exhibits (ENIAC → Steam Deck), self-hosted Wikimedia Commons images with verified permissive licenses + on-card attribution/license/source link; Photo vs. Illustration badge on every card (D-011 policy recorded).
 9. Add CI (lint + typecheck + test + build).
 10. Add visual regression or at least a smoke screenshot for the timeline.
 
@@ -172,6 +172,22 @@ See `docs/decisions.md` (D-001…D-009). Additional (2026-09-18):
   Pushes use plain `git push` — this `gh` version has no `git`/push subcommand.
 
 ## Last Updated
+2026-09-18 — v1.0: Gallery tab shipped. Replaced the `/gallery` placeholder with a
+    data-driven exhibit page: `src/data/gallery.ts` (pure view — every registry event
+    carrying ≥1 `ImageRef`, oldest first), `ExhibitCard.tsx` (image + mandatory
+    Photo/Illustration badge per D-003, attribution, license, Commons "source" link,
+    significance, `emitFocusYear` timeline cross-link), `GalleryPage.tsx` under
+    `PageShell`, `gallery.css` (auto-fill card grid). 13 exhibits across all seven
+    eras (ENIAC 1945 → PDP-8 → Intel 4004 → Altair 8800 → Apple II → Commodore 64 →
+    IBM PC 5150 → PS/2 Model 70 → GeForce 256 → Power Mac G5 → MacBook Pro Retina →
+    Apple M1 [the one labeled illustration] → Steam Deck 2022). Images self-hosted in
+    `public/images/gallery/` (≈5 MB, committed) from Wikimedia Commons with verified
+    permissive licenses (Public domain / CC0 / CC BY / CC BY-SA); `ImageRef.sourcePage?`
+    added for the file-page link. GTX 1080 deliberately dropped (only 1080 Ti die shots
+    were licensable — no mislabeling). New `gallery.test.ts` (5: metadata completeness,
+    file existence in public/, kind flags, year span) + `GalleryPage.test.tsx` (4).
+    52/52 tests, tsc/lint/build clean. `D-011` recorded in `docs/decisions.md`; README
+    tab → ✅.
 2026-09-18 — v0.9: Typical PC tab shipped. Replaced the `/typical-pc` placeholder with a
     data-driven page: `src/data/typical-pc.ts` (24 milestone years, 1977–2026; CPU/RAM/GPU/
     storage/network/sound/display/OS/price per year, reference machines, caveats, and

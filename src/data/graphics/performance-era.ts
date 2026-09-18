@@ -26,6 +26,16 @@ export const GRAPHICS_PERFORMANCE: HistoricalEvent[] = [
     },
     significance:
       'The GeForce 256 coined “GPU” and made the discrete graphics card a first-class parallel processor for 3D. It started the GPU line (GeForce → HD → RTX) that now underpins gaming, CUDA, and AI — the single most important chip in the “3D game era” the Performance Race era is named for.',
+    images: [
+      {
+        url: '/images/gallery/geforce-256.png',
+        alt: 'A Canopus GeForce 256 DDR graphics card',
+        attribution: 'Hyins, via Wikimedia Commons',
+        license: 'Public domain',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Canopus_GeForce_256_DDR.png',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-geforce-256'],
     relatedEventIds: ['3dfx-voodoo-1', 'agp', 'geforce-3', 'intel-pentium-3'],
   },

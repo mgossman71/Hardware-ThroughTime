@@ -53,3 +53,22 @@ site-wide theme; the "beyond-history" identity is carried by the projections
 band, its chip, the "present" divider, and the dashed nodes instead.
 Deliberate: there is no "future" era theme, and inventing one would blur the
 same line the data layer keeps (projections never enter `ALL_EVENTS`).
+
+## D-011 — Gallery image policy
+- The Gallery is a *view* over the data layer: `src/data/gallery.ts`
+  exposes every registry event that carries at least one `ImageRef`.
+  No exhibit list or facts live in the page itself.
+- Images are **self-hosted** in `public/images/gallery/<event-id>.<ext>`
+  (≈5 MB total, committed to the repo) so the site works offline on the
+  LAN and never depends on external CDNs staying alive.
+- Every image is a Wikimedia Commons file with a **verified permissive
+  license** (Public domain / CC0 / CC BY / CC BY-SA); the card shows
+  attribution, license, and a link back to the Commons file page
+  (`ImageRef.sourcePage`).
+- `ImageRef.kind` is surfaced as a badge: any non-photograph must be
+  `diagram` or `render` and is labeled "Illustration" / "3D render"
+  (enforces D-003). Example in current data: the Apple M1 exhibit.
+- Candidate images with unverifiable subject or license are **excluded**,
+  not included with caveats (e.g. the GTX 1080 was dropped because only
+  1080 Ti die shots were licensable).
+

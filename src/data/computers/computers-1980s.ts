@@ -27,6 +27,16 @@ export const COMPUTERS_1980S: HistoricalEvent[] = [
     },
     significance:
       'Defined the PC platform. Its open ISA bus, PC BIOS, and x86 architecture became the de facto standard that every subsequent PC — compatible or not — had to follow. This is the machine that “PC” stands for.',
+    images: [
+      {
+        url: '/images/gallery/ibm-pc-5150.jpg',
+        alt: 'An IBM PC model 5150 personal computer',
+        attribution: 'edwardhblake, via Wikimedia Commons',
+        license: 'CC BY 2.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:IBM_PC_5150_(1).jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-ibm-pc-5150'],
     relatedEventIds: ['intel-8088', 'intel-8086'],
   },
@@ -52,6 +62,16 @@ export const COMPUTERS_1980S: HistoricalEvent[] = [
     },
     significance:
       'The first mass-produced 386 desktop and the flagship of IBM’s PS/2 line. Its MCA bus attempt (a proprietary 32-bit slot) prefigured the industry’s later preference for open standards like PCI — and its price point defined the “workstation vs. clone” divide of the late 1980s.',
+    images: [
+      {
+        url: '/images/gallery/ibm-ps2-model-70.jpg',
+        alt: 'PS/2 Model 70 (8570-121) MCA motherboard with the original Intel 386 microprocessor',
+        attribution: 'Frank Zheng, via Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:IBM_PS-2_Model_70_(8570-121)_MCA_Motherboard.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-ibm-ps2'],
     relatedEventIds: ['intel-80386', 'mca-bus'],
   },

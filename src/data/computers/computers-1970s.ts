@@ -25,6 +25,16 @@ export const COMPUTERS_1970S: HistoricalEvent[] = [
     },
     significance:
       'Proved that a microcomputer could be a consumer product. The Altair directly spawned the hobbyist scene, the founding of Microsoft, and the design lineage leading to the Apple II and IBM PC.',
+    images: [
+      {
+        url: '/images/gallery/altair-8800.jpg',
+        alt: 'An Altair 8800 computer, exhibited at the Technisches Museum Wien',
+        attribution: 'Dr. Bernd Gross, via Wikimedia Commons',
+        license: 'CC BY-SA 4.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Altair_8800-Computer.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-altair-8800'],
     relatedEventIds: ['intel-8080', 'apple-ii'],
   },
@@ -48,6 +58,16 @@ export const COMPUTERS_1970S: HistoricalEvent[] = [
     },
     significance:
       'Established the personal computer as a polished, consumer-ready product rather than a hobbyist kit. Its software ecosystem (VisiCalc, later AppleWorks) demonstrated the business case for PCs.',
+    images: [
+      {
+        url: '/images/gallery/apple-ii.jpg',
+        alt: 'An original 1977 Apple II at the Computer History Museum',
+        attribution: 'The wub, via Wikimedia Commons',
+        license: 'CC BY-SA 4.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Apple_II,_1977,_Computer_History_Museum.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-apple-ii', 'wiki-mos-6502'],
     relatedEventIds: ['mos-6502', 'commodore-64'],
   },
@@ -118,6 +138,16 @@ export const COMPUTERS_1970S: HistoricalEvent[] = [
     },
     significance:
       'The C64 made computing a mass-market, consumer product. Its combination of price, capability, and a huge software library defined the home computer era and influenced generations of developers.',
+    images: [
+      {
+        url: '/images/gallery/commodore-64.jpg',
+        alt: 'A Commodore 64 home computer',
+        attribution: 'Evan-Amos, via Wikimedia Commons',
+        license: 'Public domain',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Commodore-64-Computer-BL.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-commodore-64'],
     relatedEventIds: ['mos-6502', 'apple-ii'],
   },

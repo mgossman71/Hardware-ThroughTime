@@ -1,0 +1,130 @@
+/* ============================================================
+   GALLERY FEATURE — exhibit card grid
+   ============================================================ */
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
+}
+
+.gallery__empty {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+/* --- Exhibit card ------------------------------------------------ */
+
+.exhibit {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-1);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.exhibit:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-1));
+}
+
+.exhibit__figure {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-0);
+  border-bottom: 1px solid var(--line-0);
+}
+
+.exhibit__img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.exhibit__caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}
+
+/* Photo / Illustration / 3D render badge (D-003). */
+.exhibit__kind {
+  padding: 1px var(--space-2);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius-pill);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+}
+
+.exhibit__kind--diagram,
+.exhibit__kind--render {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line-1));
+  color: var(--accent);
+}
+
+.exhibit__credit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exhibit__credit a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.exhibit__credit a:hover {
+  text-decoration: underline;
+}
+
+.exhibit__head {
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+.exhibit__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  color: var(--text-0);
+}
+
+.exhibit__meta {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-3);
+}
+
+.exhibit__significance {
+  margin: var(--space-3) var(--space-4) var(--space-4);
+  flex-grow: 1;
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}
+
+.exhibit__timeline {
+  margin: 0 var(--space-4) var(--space-4);
+  align-self: flex-start;
+  font-size: var(--text-xs);
+  color: var(--accent);
+  text-decoration: none;
+  padding: var(--space-1) 0;
+}
+
+.exhibit__timeline:hover {
+  text-decoration: underline;
+}
+
+.exhibit__timeline:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

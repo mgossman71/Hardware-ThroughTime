@@ -26,6 +26,16 @@ export const COMPUTERS_2010S: HistoricalEvent[] = [
     },
     significance:
       'The MacBook Pro Retina is the “portable power” icon of the early Multi-Core era: it made high pixel density the new laptop standard, replaced the optical drive with a thin all-SSD chassis, and defined the ultrabook/power-user portable that the rest of the industry chased through 2015.',
+    images: [
+      {
+        url: '/images/gallery/macbook-pro-retina-13.jpg',
+        alt: 'A MacBook Pro (2012)',
+        attribution: 'Leonardo Alcahuamán, via Wikimedia Commons',
+        license: 'CC0 1.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:Macbook_pro_2012.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-macbook-pro-retina'],
     relatedEventIds: ['intel-core-i7-3770k', 'thunderbolt', 'fhd-1080p', 'nvme'],
   },

@@ -16,6 +16,7 @@ RUN npm ci --no-audit --no-fund
 # Source + toolchain, then build (tsc strict + vite).
 COPY tsconfig.json tsconfig.app.json tsconfig.node.json vite.config.ts ./
 COPY index.html ./
+COPY public ./public
 COPY src ./src
 RUN npm run build
 

@@ -26,6 +26,16 @@ export const COMPUTERS_FOUNDATIONS: HistoricalEvent[] = [
     },
     significance:
       'ENIAC is where the electronic general-purpose computer begins. Its speed made computation an engineering discipline, and its limits — fixed wiring, vacuum tubes, no stored program — defined the problems the next decade set out to solve.',
+    images: [
+      {
+        url: '/images/gallery/eniac.jpg',
+        alt: 'Two sections of ENIAC on display at the Moore School of Engineering and Applied Science, University of Pennsylvania',
+        attribution: 'Photo by TexasDex (original uploader), via Wikimedia Commons',
+        license: 'CC BY-SA 3.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:ENIAC_Penn1.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-eniac'],
     relatedEventIds: ['univac-1', 'transistor'],
   },
@@ -116,6 +126,16 @@ export const COMPUTERS_FOUNDATIONS: HistoricalEvent[] = [
     },
     significance:
       'The PDP-8 defined the minicomputer class: a smaller, cheaper, cabinet-sized machine for labs and small organizations. It democratized computing a decade before the personal computer, and it was the platform that made interactive time-sharing and early graphics like Spacewar! practical.',
+    images: [
+      {
+        url: '/images/gallery/pdp-8.jpg',
+        alt: 'A DEC PDP-8 minicomputer at the Stuttgart Computer Museum',
+        attribution: 'Wolfgang Stief, via Wikimedia Commons',
+        license: 'CC BY 2.0',
+        sourcePage: 'https://commons.wikimedia.org/wiki/File:DEC_PDP-8,_Stuttgart.jpg',
+        kind: 'photo',
+      },
+    ],
     sourceIds: ['wiki-pdp-8'],
     relatedEventIds: ['ibm-system-360', 'spacewar'],
   },

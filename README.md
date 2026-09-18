@@ -35,7 +35,7 @@ with every claim traceable to a cited source.
 | `/typical-pc` | What a "normal" PC looked like each year | ✅ 24 milestone years (1977–2026) |
 | `/build-a-pc` | Build a PC from era-appropriate parts | 🚧 |
 | `/compare` | Then vs now | 🚧 |
-| `/gallery` | Hardware exhibits (licensed photos) | 🚧 |
+| `/gallery` | Hardware exhibits (licensed photos) | ✅ 13 exhibits (1945–2022) |
 | `/sources` | References | ✅ |
 
 ## Quickstart
